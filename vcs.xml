@@ -14,6 +14,10 @@
           <option name="url" value="https://github.com/yusra22/assignment.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/Workshop2-Group21/PropertySell.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\Yusara\Documents\AndroidStudioProject2" />
