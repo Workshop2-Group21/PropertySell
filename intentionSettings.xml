@@ -1,6 +1,0 @@
-<application>
-  <component name="IntentionManagerSettings">
-    <ignoreAction name="Java/Other/Flip Binary Expression" />
-    <ignoreAction name="Java/Control Flow/Invert 'if' condition" />
-  </component>
-</application>
