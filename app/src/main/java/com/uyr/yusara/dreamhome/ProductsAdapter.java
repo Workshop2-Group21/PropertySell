@@ -1,6 +1,7 @@
 package com.uyr.yusara.dreamhome;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +13,12 @@ import com.uyr.yusara.dreamhome.Modal.Product;
 
 import java.util.List;
 
-public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ProductViewHolder> {
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder> {
 
     private Context mCtx;
     private List<Product> productList;
 
-    public PropertyAdapter(Context mCtx, List<Product> productList) {
+    public ProductsAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
     }
@@ -26,10 +27,9 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Produc
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ProductViewHolder(
-                LayoutInflater.from(mCtx).inflate(R.layout.layout_property, parent, false)
+                LayoutInflater.from(mCtx).inflate(R.layout.layout_product, parent, false)
         );
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
@@ -66,10 +66,13 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Produc
 
         @Override
         public void onClick(View v) {
-/*            Product product = productList.get(getAdapterPosition());
+            //position that we click
+            Product product = productList.get(getAdapterPosition());
+
+
             Intent intent = new Intent(mCtx, UpdateProductActivity.class);
-            intent.putExtra("product", product);
-            mCtx.startActivity(intent);*/
+            intent.putExtra("property", product);
+            mCtx.startActivity(intent);
         }
     }
 }
