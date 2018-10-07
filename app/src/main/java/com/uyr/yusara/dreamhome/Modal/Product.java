@@ -15,11 +15,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.uyr.yusara.dreamhome.R;
 import com.uyr.yusara.dreamhome.TestFireBaseActivity;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
+
+    @Exclude private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     private String name, brand, description;
     private double price;

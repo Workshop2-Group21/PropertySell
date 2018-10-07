@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,13 +12,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Modal.Product;
 import com.uyr.yusara.dreamhome.RecyclerViewTest.RecycleViewTest;
 
@@ -31,7 +35,8 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
     private EditText editTextPrice;
     private EditText editTextQty;
 
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference cr = db.collection("Users");
 
     @Override
     public void onPanelClosed(int featureId, Menu menu) {
@@ -92,7 +97,48 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+/*        cr.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+*//*                if (e != null) {
+                    Toast.makeText(TestFireBaseActivity.this, "Error while loading!", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }*//*
+
+                if (documentSnapshot.exists()) {
+
+                    Intent homeIntent = new Intent(TestFireBaseActivity.this, RecycleViewTest.class)
+                    startActivity(new Intent(this, Register2.class));
+                }
+            }
+        });*/
+
+    }
+
+
+
+    @Override
     public void onClick(View v) {
+
+        switch (v.getId())
+        {
+            case R.id.button_save:
+                saveProduct();
+                break;
+            case R.id.textView_view_products:
+                startActivity(new Intent(this, ProductsActitvity.class));
+                break;
+
+        }
+
+
+
+    }
+
+    private void saveProduct() {
 
         String name = editTextName.getText().toString().trim();
         String brand = editTextBrand.getText().toString().trim();

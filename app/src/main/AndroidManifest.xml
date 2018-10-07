@@ -20,7 +20,9 @@
         <activity android:name=".RecyclerViewTest.RecycleViewTest" />
         <activity android:name=".Login" />
         <activity android:name=".Modal.Product$Register" />
-        <activity android:name=".Register2"></activity>
+        <activity android:name=".Register2" />
+        <activity android:name=".ProductsActitvity" />
+        <activity android:name=".UpdateProductActivity"></activity>
     </application>
 
 </manifest>
