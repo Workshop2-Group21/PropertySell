@@ -24,7 +24,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
+    //test push
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
