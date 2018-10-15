@@ -10,12 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +38,10 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
     private EditText editTextDesc;
     private EditText editTextPrice;
     private EditText editTextQty;
+
+    private TextView userEmail;
+
+    FirebaseUser firebaseUser;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference cr = db.collection("Users");
@@ -57,6 +65,11 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
         editTextQty     = findViewById(R.id.edittext_qty);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
+        userEmail = findViewById(R.id.tvUserEmail);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        userEmail.setText(firebaseUser.getEmail());
 
         findViewById(R.id.button_save).setOnClickListener(this);
         findViewById(R.id.textView_view_products).setOnClickListener(this);
@@ -148,7 +161,7 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
 
         if(!validateInputs(name, brand, desc, price, qty))
         {
-            CollectionReference dbProducts = db.collection("property");
+            //CollectionReference dbProducts = db.collection("property");
 
             Product product = new Product(
                     name,
@@ -158,7 +171,26 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                     Integer.parseInt(qty)
             );
 
-            dbProducts.add(product)
+            FirebaseFirestore.getInstance().collection("property")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .set(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if (task.isSuccessful()) {
+                        Toast.makeText(TestFireBaseActivity.this, "Product Added", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        //display a failure message
+
+                        Toast.makeText(TestFireBaseActivity.this, "Product fail to add", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
+
+/*            dbProducts.add(product)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -174,16 +206,11 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                             Toast.makeText(TestFireBaseActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 
                         }
-                    });
+                    });*/
         }
 
     }
 
-    public void next(View next)
-    {
-        Intent homeIntent = new Intent(TestFireBaseActivity.this, RecycleViewTest.class);
-        startActivity(homeIntent);
-    }
 
     // for toolbar
     @Override

@@ -22,7 +22,13 @@
         <activity android:name=".Modal.Product$Register" />
         <activity android:name=".Register2" />
         <activity android:name=".ProductsActitvity" />
-        <activity android:name=".UpdateProductActivity"></activity>
+        <activity android:name=".UpdateProductActivity" />
+        <activity android:name=".UploadImageTest.TestUploadActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Profile"></activity>
     </application>
 
 </manifest>
