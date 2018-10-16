@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         if (password.length() < 6) {
-            editTextPassword.setError("Minimum lenght of password should be 6");
+            editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
             return;
         }
@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 if (task.isSuccessful() && roles=="0") {
                     finish();
-                    Intent intent = new Intent(Login.this, TestFireBaseActivity.class);
+                    Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
