@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
@@ -96,13 +99,68 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    public void UpdateProfileInfo()
+    {
+        String email = editTextEmail.getText().toString();
+        String name = editTextName.getText().toString();
+        String phone = editTextphone.getText().toString();
+
+        if(TextUtils.isEmpty(email))
+        {
+            Toast.makeText(this, "Please write your email .... ", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(name))
+        {
+            Toast.makeText(this, "Please write your name .... ", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(phone))
+        {
+            Toast.makeText(this, "Please write your phone number .... ", Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+                UpdateProfileInfo(email,name,phone);
+            }
+
+    }
+
+    private void UpdateProfileInfo(String email, String name, String phone)
+    {
+        HashMap userMap = new HashMap();
+        userMap.put("email", email);
+        userMap.put("name", name);
+        userMap.put("phone", phone);
+        SettinguserRef.update(userMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful())
+                {
+                    SendUserToMainActivity();
+                    Toast.makeText(Profile.this, "Account update successfully ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    {
+                        Toast.makeText(Profile.this, "Account error update ", Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
+    }
+
+    private void SendUserToMainActivity()
+    {
+        Intent mainIntent = new Intent(Profile.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
+    }
+
     @Override
     public void onClick(View v) {
 
         switch (v.getId())
         {
             case R.id.button_update:
-                //saveProduct();
+                UpdateProfileInfo();
                 break;
 
         }
