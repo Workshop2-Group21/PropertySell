@@ -7,119 +7,139 @@
     tools:context="com.uyr.yusara.dreamhome.TestFireBaseActivity">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/transparent"></android.support.v7.widget.Toolbar>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:text="Property Details"
-            android:textAlignment="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryDark" />
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/edittext_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_background"
-            android:hint="name"
-            android:padding="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <EditText
-            android:id="@+id/edittext_brand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_background"
-            android:hint="brand"
-            android:padding="10dp" />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/transparent"></android.support.v7.widget.Toolbar>
 
-        <EditText
-            android:id="@+id/edittext_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_background"
-            android:hint="description"
-            android:padding="10dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:text="Property Details"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@color/colorPrimaryDark" />
 
-        <EditText
-            android:id="@+id/edittext_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_background"
-            android:digits="0123456789."
-            android:hint="price"
-            android:inputType="numberDecimal"
-            android:padding="10dp" />
+                <EditText
+                    android:id="@+id/edittext_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="name"
+                    android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/edittext_qty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_background"
-            android:digits="0123456789"
-            android:hint="quantity"
-            android:inputType="numberDecimal"
-            android:padding="10dp" />
+                <EditText
+                    android:id="@+id/edittext_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="brand"
+                    android:padding="10dp" />
 
-        <Button
-            android:id="@+id/button_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:background="@drawable/button_background"
-            android:onClick="onClick"
-            android:text="Save"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+                <EditText
+                    android:id="@+id/edittext_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="description"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/edittext_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:digits="0123456789."
+                    android:hint="price"
+                    android:inputType="numberDecimal"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/edittext_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:digits="0123456789"
+                    android:hint="quantity"
+                    android:inputType="numberDecimal"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/button_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/button_background"
+                    android:onClick="onClick"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
 
 
-        <TextView
-            android:id="@+id/textView_view_products"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="22dp"
-            android:foregroundGravity="bottom"
-            android:text="View Details"
-            android:textAlignment="center"
-            android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/textView_view_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="22dp"
+                    android:foregroundGravity="bottom"
+                    android:text="View Details"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/tvUserEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="22dp"
-            android:foregroundGravity="bottom"
-            android:text="Email"
-            android:textAlignment="center"
-            android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/tvUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="22dp"
+                    android:foregroundGravity="bottom"
+                    android:text="Email"
+                    android:textAlignment="center"
+                    android:textSize="22sp" />
 
-    </LinearLayout>
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_menu_camera"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
