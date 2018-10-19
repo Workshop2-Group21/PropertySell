@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +35,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -45,9 +46,12 @@ import com.uyr.yusara.dreamhome.Modal.Product;
 import com.uyr.yusara.dreamhome.Modal.User;
 import com.uyr.yusara.dreamhome.RecyclerViewTest.RecycleViewTest;
 
+import java.util.HashMap;
+
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.grpc.Context;
 
 public class TestFireBaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -114,7 +118,6 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
         findViewById(R.id.profile_image).setOnClickListener(this);
 
         //DIsplay back Image
-
         UsersRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -310,17 +313,58 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
 
+
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(TestFireBaseActivity.this, "Your Image Successfully Uploaded ", Toast.LENGTH_SHORT).show();
-
-                            final String downloadUrl = filePath.getDownloadUrl().toString();
-                            UsersRef.collection("profileimage2").document(downloadUrl).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                                public void onSuccess(Uri uri) {
+
+                                    final String downloadUrl = String.valueOf(filePath.getDownloadUrl());
+                                    Log.i("downloadUrl",downloadUrl);
+
+                                    //Important msukkan url ke dlam profileimage2
+                                    String uriurl = uri.toString();
+                                    Log.i("uri",uri.toString());
+
+                                    Toast.makeText(TestFireBaseActivity.this, "Your Image Successfully Uploaded ", Toast.LENGTH_SHORT).show();
+
+                                    HashMap userMap = new HashMap();
+                                    userMap.put("profileimage2", uriurl);
+                                    //Pilihan untuk update
+                                    //UsersRef.update(userMap).addOnCompleteListener(new OnCompleteListener() {
+
+                                    UsersRef.set(userMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if (task.isSuccessful())
+                                            {
+                                                Toast.makeText(TestFireBaseActivity.this, "Link update successfully ", Toast.LENGTH_SHORT).show();
+                                                Intent selfIntent = new Intent(TestFireBaseActivity.this, TestFireBaseActivity.class);
+                                                startActivity(selfIntent);
+                                                Toast.makeText(TestFireBaseActivity.this, "Profile Image Store to Firebase Success", Toast.LENGTH_LONG).show();
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(TestFireBaseActivity.this, "update image link error ", Toast.LENGTH_SHORT).show();
+                                                String message = task.getException().getMessage();
+                                                Toast.makeText(TestFireBaseActivity.this, "Error Occured" + message, Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
+                                }
+                            });
+
+
+/*                            UsersRef.collection("profileimage2").document(downloadUrl).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
+                                {
 
                                     if(task.isSuccessful())
                                     {
+                                        Updateprofilelink(downloadUrl);
                                         Intent selfIntent = new Intent(TestFireBaseActivity.this, TestFireBaseActivity.class);
                                         startActivity(selfIntent);
                                         Toast.makeText(TestFireBaseActivity.this, "Profile Image Store to Firebase Success", Toast.LENGTH_LONG).show();
@@ -331,7 +375,7 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                                             Toast.makeText(TestFireBaseActivity.this, "Error Occured" + message, Toast.LENGTH_LONG).show();
                                         }
                                 }
-                            });
+                            });*/
                         }
 
                     }
@@ -344,6 +388,28 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                 }
         }
     }
+
+    //Untuk update link image dlm db
+    private void Updateprofilelink(String downloadUrl) {
+
+/*        HashMap userMap = new HashMap();
+        userMap.put("profileimage2", downloadUrl);
+        UsersRef.update(userMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(TestFireBaseActivity.this, "Link update successfully ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(TestFireBaseActivity.this, "update image link error ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+
+    }
+
 
     // for toolbar
     @Override
