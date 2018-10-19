@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
