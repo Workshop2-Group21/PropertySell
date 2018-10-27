@@ -176,7 +176,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_find) {
 
+            Intent allpost = new Intent(MainActivity.this, AllPostActivity.class);
+            startActivity(allpost);
+
         } else if (id == R.id.nav_fav) {
+
+            Intent post = new Intent(MainActivity.this, PostActivity.class);
+            startActivity(post);
 
         } else if (id == R.id.nav_share) {
 
