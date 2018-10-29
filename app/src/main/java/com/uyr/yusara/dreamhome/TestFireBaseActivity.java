@@ -208,9 +208,6 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
                 break;
 
         }
-
-
-
     }
 
     private void saveProduct() {

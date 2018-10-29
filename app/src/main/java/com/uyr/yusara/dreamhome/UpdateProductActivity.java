@@ -90,7 +90,6 @@ public class UpdateProductActivity extends AppCompatActivity implements View.OnC
         return false;
     }
 
-
     private void updateProduct() {
         String name = editTextName.getText().toString().trim();
         String brand = editTextBrand.getText().toString().trim();
