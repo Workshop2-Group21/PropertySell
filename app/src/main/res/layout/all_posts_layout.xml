@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/browser_actions_bg_grey">
+    android:background="@drawable/post_border">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="3dp"
+
             android:orientation="horizontal"
             android:padding="5dp">
 
@@ -63,11 +64,11 @@
                         android:id="@+id/post_product_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginLeft="50dp"
                         android:layout_weight="1"
                         android:text="Date"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
             </LinearLayout>

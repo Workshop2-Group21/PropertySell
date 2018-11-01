@@ -177,7 +177,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        Log.i("LOGGER",document.getString("email"));
+                        //Log.i("LOGGER",document.getString("email"));
 
                         String name = document.getString("name");
                         String userprofile = document.getString("profileimage2");
