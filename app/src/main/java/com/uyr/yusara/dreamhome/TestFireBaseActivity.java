@@ -170,22 +170,6 @@ public class TestFireBaseActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onStart() {
         super.onStart();
-/*        cr.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-*//*                if (e != null) {
-                    Toast.makeText(TestFireBaseActivity.this, "Error while loading!", Toast.LENGTH_SHORT).show();
-
-                    return;
-                }*//*
-
-                if (documentSnapshot.exists()) {
-
-                    Intent homeIntent = new Intent(TestFireBaseActivity.this, RecycleViewTest.class)
-                    startActivity(new Intent(this, Register2.class));
-                }
-            }
-        });*/
 
     }
 

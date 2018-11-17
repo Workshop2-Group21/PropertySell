@@ -2,11 +2,24 @@ package com.uyr.yusara.dreamhome.Modal;
 
 public class Posts
 {
-    public String uid,time,date,description,postImage;
+    public String uid;
+    public String time;
+    public String date;
+    public String description;
+    public String postImage;
+    public String productname;
 
     public Posts()
     {
 
+    }
+
+    public String getProductname() {
+        return productname;
+    }
+
+    public void setProductname(String productname) {
+        this.productname = productname;
     }
 
     public String getUid() {

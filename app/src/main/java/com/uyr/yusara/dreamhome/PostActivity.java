@@ -1,18 +1,23 @@
 package com.uyr.yusara.dreamhome;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,12 +49,13 @@ import javax.annotation.Nullable;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton SelectPostImage;
-    private Button UpdatePostButton;
-    private EditText PostDescription;
+    private Button UpdatePostButton,propertytypeButton;
+    private EditText PostDescription,PostSize,PostPrice,PostDescription2;
+    private TextView Postproperty,Postbedroom, Postbathroom,Posttitletype,Postotherinfo;
 
     final static int gallerypick = 1;
     private Uri ImageUri;
-    private String Description;
+    private String Description,propertystring,bedroomstring,bathroomstring,titletypestring,otherinfostring,sizestring,pricestring,description2string;
     private String downloadUrl,uriurl;
 
 
@@ -79,10 +85,26 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         SelectPostImage = findViewById(R.id.select_post);
         UpdatePostButton = findViewById(R.id.btnupdatepost);
-        PostDescription = findViewById(R.id.edit_Post);
+        PostDescription = findViewById(R.id.edit_desc);
+        Postproperty = findViewById(R.id.edit_property);
+        Postbedroom = findViewById(R.id.edit_bedrooms);
+        Postbathroom = findViewById(R.id.edit_bathrooms);
+        Posttitletype = findViewById(R.id.edit_titletype);
+        Postotherinfo = findViewById(R.id.edit_otherinfo);
+        PostSize = findViewById(R.id.edit_size);
+        PostPrice = findViewById(R.id.edit_price);
+        PostDescription2 = findViewById(R.id.edit_decription2);
 
         findViewById(R.id.select_post).setOnClickListener(this);
         findViewById(R.id.btnupdatepost).setOnClickListener(this);
+        findViewById(R.id.edit_property).setOnClickListener(this);
+        findViewById(R.id.edit_bedrooms).setOnClickListener(this);
+        findViewById(R.id.edit_bathrooms).setOnClickListener(this);
+        findViewById(R.id.edit_titletype).setOnClickListener(this);
+        findViewById(R.id.edit_otherinfo).setOnClickListener(this);
+        findViewById(R.id.edit_size).setOnClickListener(this);
+        findViewById(R.id.edit_decription2).setOnClickListener(this);
+
 
     }
 
@@ -111,12 +133,53 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     public void UpdateBtnPost()
     {
         Description = PostDescription.getText().toString();
+        propertystring = Postproperty.getText().toString();
+        bedroomstring = Postbedroom.getText().toString();
+        bathroomstring = Postbathroom.getText().toString();
+        titletypestring = Posttitletype.getText().toString();
+        otherinfostring = Postotherinfo.getText().toString();
+        sizestring = PostSize.getText().toString();
+        pricestring = PostPrice.getText().toString();
+
+        description2string = PostDescription2.getText().toString();
 
         if(ImageUri == null)
         {
             Toast.makeText(this, "Please select Image ...",Toast.LENGTH_SHORT).show();
         }
         if(TextUtils.isEmpty(Description))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(propertystring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(bedroomstring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(bathroomstring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(titletypestring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(otherinfostring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(sizestring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(pricestring))
+        {
+            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(description2string))
         {
             Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
         }
@@ -168,6 +231,222 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void propertytypeItem1()
+    {
+        final CharSequence options[] = new CharSequence[]
+                {
+                    "Bungalow",
+                    "Single storey",
+                    "Two and a half storey",
+                    "Triple storey",
+                    "Semi detached",
+                    "Others"
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Select Options");
+
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    Postproperty.setText(options[0]);
+                }
+                if (which == 1)
+                {
+                    Postproperty.setText(options[1]);
+                }
+                if (which == 2)
+                {
+                    Postproperty.setText(options[2]);
+                }
+                if (which == 3)
+                {
+                    Postproperty.setText(options[3]);
+                }
+                if (which == 4)
+                {
+                    Postproperty.setText(options[4]);
+                }
+                if (which == 5)
+                {
+                    Postproperty.setText(options[5]);
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void bedroomItem()
+    {
+        final CharSequence options[] = new CharSequence[]
+                {
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "More than 5"
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Select Options");
+
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    Postbedroom.setText(options[0]);
+                }
+                if (which == 1)
+                {
+                    Postbedroom.setText(options[1]);
+                }
+                if (which == 2)
+                {
+                    Postbedroom.setText(options[2]);
+                }
+                if (which == 3)
+                {
+                    Postbedroom.setText(options[3]);
+                }
+                if (which == 4)
+                {
+                    Postbedroom.setText(options[4]);
+                }
+                if (which == 5)
+                {
+                    Postbedroom.setText(options[5]);
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void bathroomItem()
+    {
+        final CharSequence options[] = new CharSequence[]
+                {
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "More than 5"
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Select Options");
+
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    Postbathroom.setText(options[0]);
+                }
+                if (which == 1)
+                {
+                    Postbathroom.setText(options[1]);
+                }
+                if (which == 2)
+                {
+                    Postbathroom.setText(options[2]);
+                }
+                if (which == 3)
+                {
+                    Postbathroom.setText(options[3]);
+                }
+                if (which == 4)
+                {
+                    Postbathroom.setText(options[4]);
+                }
+                if (which == 5)
+                {
+                    Postbathroom.setText(options[5]);
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void titletypeItem()
+    {
+        final CharSequence options[] = new CharSequence[]
+                {
+                        "Freehold",
+                        "Leasehold"
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Select Options");
+
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    Posttitletype.setText(options[0]);
+                }
+                if (which == 1)
+                {
+                    Posttitletype.setText(options[1]);
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void otherinfoItem()
+    {
+        final CharSequence options[] = new CharSequence[]
+                {
+                        "Bumi Lot",
+                        "Non Bumi Lot",
+                        "Malay Reserved"
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+        builder.setTitle("Other Info");
+
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    Postotherinfo.setText(options[0]);
+                }
+                if (which == 1)
+                {
+                    Postotherinfo.setText(options[1]);
+                }
+                if (which == 2)
+                {
+                    Postotherinfo.setText(options[2]);
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
     private void SavingPostInformationToDB()
     {
 
@@ -187,6 +466,14 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         postMap.put("date", saveCurrentDate);
                         postMap.put("time", saveCurrentTime);
                         postMap.put("description", Description);
+                        postMap.put("propertytype", propertystring);
+                        postMap.put("bedrooms", bedroomstring);
+                        postMap.put("bathroom", bathroomstring);
+                        postMap.put("titletype", titletypestring);
+                        postMap.put("otherinfo", otherinfostring);
+                        postMap.put("size", sizestring);
+                        postMap.put("price", pricestring);
+                        postMap.put("description2", description2string);
                         postMap.put("postImage", uriurl);
                         postMap.put("name", name);
                         postMap.put("profileimage2", userprofile);
@@ -215,7 +502,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
     }
 
     @Override
@@ -228,6 +514,21 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnupdatepost:
                 UpdateBtnPost();
+                break;
+            case R.id.edit_property:
+                propertytypeItem1();
+                break;
+            case R.id.edit_bedrooms:
+                bedroomItem();
+                break;
+            case R.id.edit_bathrooms:
+                bathroomItem();
+                break;
+            case R.id.edit_titletype:
+                titletypeItem();
+                break;
+            case R.id.edit_otherinfo:
+                otherinfoItem();
                 break;
         }
     }

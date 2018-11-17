@@ -158,11 +158,11 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
 
     }
 
-    public void next(View view)
+/*    public void next(View view)
     {
         Intent homeIntent = new Intent(Register2.this, TestFireBaseActivity.class);
         startActivity(homeIntent);
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
