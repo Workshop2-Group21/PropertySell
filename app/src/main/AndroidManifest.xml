@@ -37,7 +37,10 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".PostActivity" />
         <activity android:name=".AllPostActivity" />
-        <activity android:name=".ClickPostActivity"></activity>
+        <activity android:name=".ClickPostActivity" />
+        <activity android:name=".AllPostActivityAgent" />
+        <activity android:name=".FindHouseActivity" />
+        <activity android:name=".CommentActivity"></activity>
     </application>
 
 </manifest>

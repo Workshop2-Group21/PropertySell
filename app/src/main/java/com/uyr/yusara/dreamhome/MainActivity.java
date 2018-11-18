@@ -171,12 +171,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_sell) {
 
-            Intent sell = new Intent(MainActivity.this, TestFireBaseActivity.class);
+            Intent sell = new Intent(MainActivity.this, PostActivity.class);
             startActivity(sell);
 
         } else if (id == R.id.nav_find) {
 
-            Intent allpost = new Intent(MainActivity.this, AllPostActivity.class);
+            Intent allpost = new Intent(MainActivity.this, FindHouseActivity .class);
             startActivity(allpost);
 
         } else if (id == R.id.nav_fav) {
@@ -186,9 +186,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_share) {
 
+            Intent post = new Intent(MainActivity.this, AllPostActivity.class);
+            startActivity(post);
+
         } else if (id == R.id.nav_about) {
 
-            Intent details = new Intent(MainActivity.this, ClickPostActivity.class);
+            Intent details = new Intent(MainActivity.this, AllPostActivityAgent.class);
             startActivity(details);
 
         } else if (id == R.id.nav_logout) {

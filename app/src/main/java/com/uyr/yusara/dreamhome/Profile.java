@@ -1,6 +1,7 @@
 package com.uyr.yusara.dreamhome;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -21,10 +24,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,7 +43,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextName;
     private EditText editTextphone;
 
-    //private CircleImageView userProfImage;
+    // Code gambar
+    private CircleImageView ProfileImage;
+    final static int gallerypick = 1;
+    private StorageReference UserProfileImageRef;
 
     private DocumentReference SettinguserRef;
     private FirebaseAuth mAuth;
@@ -41,20 +55,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Code gambar
+        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile Images");
+        ProfileImage    = findViewById(R.id.profile_image);
+
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
         SettinguserRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
+
 
         editTextEmail    = findViewById(R.id.edittext_email);
         editTextName   = findViewById(R.id.edittext_fullname);
         editTextphone    = findViewById(R.id.edittext_phone);
 
         findViewById(R.id.button_update).setOnClickListener(this);
+        findViewById(R.id.profile_image).setOnClickListener(this);
 
         SettinguserRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -81,21 +103,21 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-/*        SettinguserRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        //DIsplay back Image
+        SettinguserRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
                 if(documentSnapshot.exists())
                 {
-                    String myProfileemail = documentSnapshot.getString("email");
-                    String myProfilename = documentSnapshot.getDocumentReference("name").toString();
-                    String myProfilephone = documentSnapshot.getDocumentReference("phone").toString();
+                    String image = documentSnapshot.getString("profileimage2");
 
-                    editTextEmail.setText("Hi");
-                    editTextName.setText(myProfilename);
-                    editTextphone.setText(myProfilephone);
+                    //Picasso.get().load(image).placeholder(R.drawable.cc).into(ProfileImage);
+                    Glide.with(Profile.this).load(image).into(ProfileImage);
                 }
+
             }
-        });*/
+        });
 
     }
 
@@ -154,6 +176,94 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         finish();
     }
 
+    public void toGallery()
+    {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, gallerypick);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == gallerypick && resultCode == RESULT_OK && data!= null)
+        {
+            Uri ImageUri = data.getData();
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1,1)
+                    .start(this);
+
+        }
+
+        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Toast.makeText(Profile.this, "msuk requestcode", Toast.LENGTH_LONG).show();
+
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(Profile.this, "result masuk", Toast.LENGTH_LONG).show();
+                Uri resultUri = result.getUri();
+
+                final StorageReference filePath = UserProfileImageRef.child(currentUserid + ".jpg");
+
+                //save the crop inside firebase storage
+                //save the link inside firebase
+                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
+
+
+                        if (task.isSuccessful()) {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    final String downloadUrl = String.valueOf(filePath.getDownloadUrl());
+                                    Log.i("downloadUrl", downloadUrl);
+
+                                    //Important msukkan url ke dlam profileimage2
+                                    String uriurl = uri.toString();
+                                    Log.i("uri", uri.toString());
+
+                                    Toast.makeText(Profile.this, "Your Image Successfully Uploaded ", Toast.LENGTH_SHORT).show();
+
+                                    HashMap userMap = new HashMap();
+                                    userMap.put("profileimage2", uriurl);
+                                    //Pilihan untuk update
+                                    //UsersRef.update(userMap).addOnCompleteListener(new OnCompleteListener() {
+
+                                    SettinguserRef.set(userMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(Profile.this, "Link update successfully ", Toast.LENGTH_SHORT).show();
+                                                Intent selfIntent = new Intent(Profile.this, Profile.class);
+                                                startActivity(selfIntent);
+                                                Toast.makeText(Profile.this, "Profile Image Store to Firebase Success", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(Profile.this, "update image link error ", Toast.LENGTH_SHORT).show();
+                                                String message = task.getException().getMessage();
+                                                Toast.makeText(Profile.this, "Error Occured" + message, Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
+                                }
+                            });
+                            
+                        }
+
+                    }
+                });
+
+            } else {
+                Toast.makeText(Profile.this, "Error Occured: Image cant be crop, try again", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -161,6 +271,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.button_update:
                 UpdateProfileInfo();
+                break;
+            case R.id.profile_image:
+                toGallery();
                 break;
 
         }

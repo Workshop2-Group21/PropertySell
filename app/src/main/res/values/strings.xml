@@ -20,4 +20,22 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string-array name="names">
+        <item>Bungalow/Villa/Cluster House</item>
+        <item>Single storey</item>
+        <item>Double storey</item>
+        <item>Two and a half storey</item>
+        <item>Triple storey</item>
+        <item>Semi detached</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="bedrooms">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>More than 6</item>
+    </string-array>
 </resources>

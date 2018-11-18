@@ -20,7 +20,7 @@
             android:fontFamily="cursive"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/app_name_size" />
 
         <EditText
@@ -78,7 +78,7 @@
             android:id="@+id/button_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/aqua"
             android:text="@string/register"
             android:textAllCaps="false"
             android:textColor="@color/cardview_light_background" />
@@ -87,15 +87,6 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/button_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="next"
-            android:text="Add"
-            android:textColor="@color/cardview_light_background" />
 
     </LinearLayout>
 

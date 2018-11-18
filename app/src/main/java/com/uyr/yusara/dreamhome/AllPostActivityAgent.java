@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,24 +21,23 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.uyr.yusara.dreamhome.Modal.Posts;
 
-public class AllPostActivity extends AppCompatActivity {
+public class AllPostActivityAgent extends AppCompatActivity {
 
     private RecyclerView postList;
 
     private DocumentReference UsersRef;
     private CollectionReference Postsref;
-    private CollectionReference Postsref2;
+    private DocumentReference Postsref2;
 
     private FirebaseAuth mAuth;
     private String currentUserid;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_post);
+        setContentView(R.layout.activity_all_post_agent);
 
-        postList = findViewById(R.id.recyclerview_allpost);
+        postList = findViewById(R.id.recyclerview_allpostagent);
         postList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -53,7 +49,6 @@ public class AllPostActivity extends AppCompatActivity {
 
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
         Postsref = FirebaseFirestore.getInstance().collection("Posts");
-        //Postsref = FirebaseDatabase.getInstance().getReference().child("Posts");
 
     }
 
@@ -65,16 +60,17 @@ public class AllPostActivity extends AppCompatActivity {
                 .setQuery(Postsref,Posts.class)
                 .build();
 
-        FirestoreRecyclerAdapter<Posts,PostsViewHolder > adapter = new FirestoreRecyclerAdapter<Posts, PostsViewHolder>(options) {
+        FirestoreRecyclerAdapter<Posts,AllPostActivityAgent.PostsViewHolder > adapter = new FirestoreRecyclerAdapter<Posts, AllPostActivityAgent.PostsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull PostsViewHolder holder, final int position, @NonNull Posts model)
+            protected void onBindViewHolder(@NonNull AllPostActivityAgent.PostsViewHolder holder, final int position, @NonNull Posts model)
             {
+
 
 
                 holder.productname.setText(model.getDescription());
                 holder.productprice.setText(model.getTime());
                 holder.productdate.setText(model.getDate());
-                Glide.with(AllPostActivity.this).load(model.getPostImage()).into(holder.productimage);
+                Glide.with(AllPostActivityAgent.this).load(model.getPostImage()).into(holder.productimage);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -85,7 +81,7 @@ public class AllPostActivity extends AppCompatActivity {
                         String PostImg = getSnapshots().get(position).getPostImage();
                         //String PostKey = getItem(position).getUid();
 
-                        Intent click_post = new Intent(AllPostActivity.this,ClickPostActivity.class);
+                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
                         click_post.putExtra("Description", Decrip);
                         click_post.putExtra("PostImage", PostImg);
@@ -96,10 +92,10 @@ public class AllPostActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType)
+            public AllPostActivityAgent.PostsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType)
             {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_posts_layout, viewGroup, false);
-                PostsViewHolder  viewHolder = new PostsViewHolder(view);
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_post_layout_agent, viewGroup, false);
+                AllPostActivityAgent.PostsViewHolder viewHolder = new AllPostActivityAgent.PostsViewHolder(view);
 
                 return viewHolder;
             }
@@ -108,7 +104,6 @@ public class AllPostActivity extends AppCompatActivity {
         postList.setAdapter(adapter);
         adapter.startListening();
     }
-
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {

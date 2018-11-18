@@ -4,38 +4,326 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lime"
     tools:context=".PostActivity">
 
-    <EditText
-        android:id="@+id/edit_Post"
+
+    <!--    <EditText
+            android:id="@+id/edit_protype"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_desc"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="215dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:hint=""
+            android:padding="5dp" />-->
+
+
+    <!--    <Spinner
+            android:id="@+id/edit_propertytype"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/edit_desc"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="312dp"
+            android:layout_marginEnd="-1dp"
+            android:background="@drawable/edittext_background"></Spinner>
+
+        <Spinner
+            android:id="@+id/edit_bedrooms"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@+id/edit_desc"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="354dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/edittext_background"></Spinner>-->
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="195dp"
-        android:ems="10"
-        android:hint="Write something about your life"
-        android:inputType="textMultiLine"
-        android:padding="15dp" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnupdatepost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="89dp"
-        android:text="Update Post" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fui_transparent"
+            android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/select_post"
-        android:layout_width="291dp"
-        android:layout_height="208dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:background="@drawable/rounded_button_transparent"
-        android:scaleType="fitCenter"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+            <!--           <TextView
+                android:id="@+id/propertytypetitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="25dp"
+                android:text="Property Type :"
+                android:textSize="18sp"
+                android:textStyle="bold" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/select_post"
+                    android:layout_width="120dp"
+                    android:layout_height="110dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="41dp"
+                    android:background="@drawable/photo"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Title :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/edit_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint="Ad Title"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/propertytypetitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Property Type :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint=""
+                android:padding="5dp"
+                android:text="Select Property Type"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/bedroomstitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Bedrooms :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_bedrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint=""
+                android:padding="5dp"
+                android:text="Select No of Bedroom"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bathroomtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Bathroom :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_bathrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint=""
+                android:padding="5dp"
+                android:text="Select No of Bathroom"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/titletypetitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Title type :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_titletype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint=""
+                android:padding="5dp"
+                android:text="Select Title Type"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/titleotherinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Other info :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_otherinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint=""
+                android:padding="5dp"
+                android:text="Select Title Type"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/titlesize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Size :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint="Size in sq.ft"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="20sp"
+                android:inputType="number"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/titlePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Price :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/edit_desc"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:fontFamily="cursive"
+                android:hint="RM ... "
+                android:padding="5dp"
+                android:text=""
+                android:textSize="20sp"
+                android:inputType="number"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/titleDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="Description :"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_decription2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:hint="Description - Include detals such as the Brand, Preference to do Cash on Delivery, Payment &amp; Postage Info, Estimated time of delivery of the good or services, Warrabty and Other T&amp;C"
+                android:inputType="textMultiLine"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnupdatepost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="17dp"
+                android:text="Post" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
