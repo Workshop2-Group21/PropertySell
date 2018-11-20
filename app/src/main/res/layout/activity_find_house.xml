@@ -7,11 +7,18 @@
     android:background="@color/common_google_signin_btn_text_dark_default"
     tools:context=".FindHouseActivity">
 
+    <include
+        android:id="@+id/find_toolbar"
+        layout="@layout/app_bar_layout">
+
+    </include>
+
 
     <RelativeLayout
         android:id="@+id/myLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/find_toolbar"
         android:layout_marginTop="15dp">
 
        <TextView

@@ -40,7 +40,9 @@
         <activity android:name=".ClickPostActivity" />
         <activity android:name=".AllPostActivityAgent" />
         <activity android:name=".FindHouseActivity" />
-        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".ClickPostActivityAgent" />
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

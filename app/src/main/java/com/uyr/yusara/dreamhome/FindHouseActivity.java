@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -31,13 +32,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindHouseActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+
     private ImageButton SearchButton;
     private EditText SearchInputText;
 
     private RecyclerView SearchResultList;
 
     private CollectionReference allUserDatabaseRef;
+
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,35 @@ public class FindHouseActivity extends AppCompatActivity {
             SearchHouseType(searchBoxInput);
         }
     });
+
+    //dpat dri layout activity_find_house toolbar
+        mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
+    setSupportActionBar(mToolbar);
+    getSupportActionBar().setTitle("Find House");
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
 
+        if(id == android.R.id.home)
+        {
+            SendUserToMainActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void SendUserToMainActivity()
+    {
+        Intent mainIntent = new Intent(FindHouseActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
+    }
 
     private void SearchHouseType(String searchBoxInput)
     {
@@ -93,14 +122,15 @@ public class FindHouseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        String PostKey = getSnapshots().get(position).getUid();
+                        //String PostKey = getSnapshots().get(position).getUid();
+                        String PostKey = getSnapshots().getSnapshot(position).getId();
                         String Decrip = getSnapshots().get(position).getDescription();
                         String PostImg = getSnapshots().get(position).getPostImage();
                         //String PostKey = getItem(position).getUid();
 
-                        Intent click_post = new Intent(FindHouseActivity.this,ClickPostActivity.class);
+                        Intent click_post = new Intent(FindHouseActivity.this, ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
-                        click_post.putExtra("Description", Decrip);
+                    //    click_post.putExtra("Description", Decrip);
                         click_post.putExtra("PostImage", PostImg);
                         startActivity(click_post);
                     }
@@ -111,7 +141,7 @@ public class FindHouseActivity extends AppCompatActivity {
             public FindHouseTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
             {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_users_display_layout, parent, false);
-                FindHouseActivity.FindHouseTypeViewHolder viewHolder = new FindHouseActivity.FindHouseTypeViewHolder(view);
+                FindHouseTypeViewHolder viewHolder = new FindHouseTypeViewHolder(view);
 
                 return viewHolder;
             }
@@ -121,6 +151,7 @@ public class FindHouseActivity extends AppCompatActivity {
         adapter.startListening();
 
     }
+
 
     public static class FindHouseTypeViewHolder extends RecyclerView.ViewHolder
     {
