@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private String currentUserid;
 
-    private Toolbar mToolbar;
+    private android.support.v7.widget.Toolbar mToolbar;
 
 
 
@@ -119,7 +120,26 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+        mToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.find_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(" My Profile ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home)
+        {
+            SendUserToMainActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void UpdateProfileInfo()
     {

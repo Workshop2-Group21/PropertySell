@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -66,7 +69,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private DocumentReference UsersRef;
     private CollectionReference Postsref;
 
+    private int countPosts = 0;
+
     private String saveCurrentDate, saveCurrentTime, postRandomName;
+
+    private Toolbar mToolbar;
 
 
     @Override
@@ -106,6 +113,33 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.edit_decription2).setOnClickListener(this);
 
 
+        mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(" Sell House");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home)
+        {
+            SendUserToMainActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void SendUserToMainActivity()
+    {
+        Intent mainIntent = new Intent(PostActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 
     @Override
@@ -449,6 +483,27 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     private void SavingPostInformationToDB()
     {
+        //Untuk Susun
+        Postsref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful())
+                {
+                    QuerySnapshot document = task.getResult();
+                    if (document != null)
+                    {
+                        countPosts = document.size();
+
+                    }
+                    else
+                        {
+                            countPosts = 0;
+                        }
+                }
+            }
+        });
+
 
         UsersRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -476,6 +531,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         postMap.put("description2", description2string);
                         postMap.put("postImage", uriurl);
                         postMap.put("name", name);
+                        postMap.put("counter", countPosts);
                         postMap.put("profileimage2", userprofile);
 
                         Toast.makeText(PostActivity.this, "Masuk Saving Post info ", Toast.LENGTH_SHORT).show();

@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.uyr.yusara.dreamhome.Modal.Posts;
 
 public class AllPostActivityAgent extends AppCompatActivity {
@@ -31,6 +34,8 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String currentUserid;
+
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +54,45 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
         Postsref = FirebaseFirestore.getInstance().collection("Posts");
+        //Postsref = FirebaseFirestore.getInstance().collection("Posts").document(PostKey).collection("comment");
 
+        mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("My Sell House List");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home)
+        {
+            SendUserToMainActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void SendUserToMainActivity()
+    {
+        Intent mainIntent = new Intent(AllPostActivityAgent.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        //Query SortPostsInDecendingOrder = Postsref.orderBy("counter");
+        Query SortAgentPost = Postsref.orderBy("uid").startAt(currentUserid).endAt(currentUserid + "\uf8ff");
+
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
-                .setQuery(Postsref,Posts.class)
+                .setQuery(SortAgentPost,Posts.class)
                 .build();
 
         FirestoreRecyclerAdapter<Posts,AllPostActivityAgent.PostsViewHolder > adapter = new FirestoreRecyclerAdapter<Posts, AllPostActivityAgent.PostsViewHolder>(options) {
@@ -76,15 +111,24 @@ public class AllPostActivityAgent extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        String PostKey = getSnapshots().get(position).getUid();
+                        //Untuk dpat id user
+                        //String PostKey = getSnapshots().get(position).getUid();
+
+                        // Untuk dpat Id dalam table post
+                        String PostKey = getSnapshots().getSnapshot(position).getId();
                         String Decrip = getSnapshots().get(position).getDescription();
                         String PostImg = getSnapshots().get(position).getPostImage();
-                        //String PostKey = getItem(position).getUid();
+                        String Price = getSnapshots().get(position).getPrice();
+                        String PropertyType = getSnapshots().get(position).getPropertytype();
 
-                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivity.class);
+
+                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivityAgent.class);
                         click_post.putExtra("PostKey", PostKey);
-                        click_post.putExtra("Description", Decrip);
+/*                        click_post.putExtra("Description", Decrip);
+                        click_post.putExtra("Price", Price);
+                        click_post.putExtra("PropertyType", PropertyType);*/
                         click_post.putExtra("PostImage", PostImg);
+
                         startActivity(click_post);
                     }
                 });
