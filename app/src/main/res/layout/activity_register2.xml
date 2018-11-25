@@ -78,7 +78,7 @@
             android:id="@+id/button_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/aqua"
+            android:background="@drawable/button_background"
             android:text="@string/register"
             android:textAllCaps="false"
             android:textColor="@color/cardview_light_background" />

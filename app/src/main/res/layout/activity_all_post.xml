@@ -14,11 +14,28 @@
     </include>
 
 
+    <ImageButton
+        android:id="@+id/btnPost"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_above="@id/recyclerview_allpost"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/rednew"
+        android:focusableInTouchMode="false"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_post" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_allpost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/find_toolbar"/>
+        android:layout_below="@+id/find_toolbar">
+
+    </android.support.v7.widget.RecyclerView>
+
+
 
 
 </RelativeLayout>

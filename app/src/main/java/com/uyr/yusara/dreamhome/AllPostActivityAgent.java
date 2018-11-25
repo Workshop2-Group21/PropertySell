@@ -1,7 +1,9 @@
 package com.uyr.yusara.dreamhome;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -30,12 +34,15 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
     private DocumentReference UsersRef;
     private CollectionReference Postsref;
-    private DocumentReference Postsref2;
+    //private DocumentReference Postsref2;
 
     private FirebaseAuth mAuth;
     private String currentUserid;
 
     private Toolbar mToolbar;
+
+    private String PostKey2;
+    private DocumentReference PostsRef2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,9 @@ public class AllPostActivityAgent extends AppCompatActivity {
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
         Postsref = FirebaseFirestore.getInstance().collection("Posts");
         //Postsref = FirebaseFirestore.getInstance().collection("Posts").document(PostKey).collection("comment");
+
+
+
 
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
@@ -103,7 +113,7 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
 
                 holder.productname.setText(model.getDescription());
-                holder.productprice.setText(model.getTime());
+                holder.productprice.setText("RM " + model.getPrice());
                 holder.productdate.setText(model.getDate());
                 Glide.with(AllPostActivityAgent.this).load(model.getPostImage()).into(holder.productimage);
 
@@ -122,14 +132,75 @@ public class AllPostActivityAgent extends AppCompatActivity {
                         String PropertyType = getSnapshots().get(position).getPropertytype();
 
 
-                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivityAgent.class);
+                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
-/*                        click_post.putExtra("Description", Decrip);
-                        click_post.putExtra("Price", Price);
+                        click_post.putExtra("Description", Decrip);
+                   /*     click_post.putExtra("Price", Price);
                         click_post.putExtra("PropertyType", PropertyType);*/
                         click_post.putExtra("PostImage", PostImg);
 
                         startActivity(click_post);
+
+                    }
+                });
+
+                holder.layout_action1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AllPostActivityAgent.this);
+                        builder.setTitle("Are you sure about this?");
+
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String PostKey = getSnapshots().getSnapshot(position).getId();
+
+                                PostsRef2 = FirebaseFirestore.getInstance().collection("Posts").document(PostKey);
+
+                                PostsRef2.delete();
+                                Toast.makeText(AllPostActivityAgent.this, "Property delete successfully ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        AlertDialog ad = builder.create();
+                        ad.show();
+
+                    }
+                });
+
+                holder.layout_action2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        //Untuk dpat id user
+                        //String PostKey = getSnapshots().get(position).getUid();
+
+                        // Untuk dpat Id dalam table post
+                        String PostKey = getSnapshots().getSnapshot(position).getId();
+                        String Decrip = getSnapshots().get(position).getDescription();
+                        String PostImg = getSnapshots().get(position).getPostImage();
+                        String Price = getSnapshots().get(position).getPrice();
+                        String PropertyType = getSnapshots().get(position).getPropertytype();
+
+
+                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivityAgent.class);
+                        click_post.putExtra("PostKey", PostKey);
+                        //    click_post.putExtra("Description", Decrip);
+              /*          click_post.putExtra("Price", Price);
+                        click_post.putExtra("PropertyType", PropertyType);*/
+                        click_post.putExtra("PostImage", PostImg);
+
+                        startActivity(click_post);
+
                     }
                 });
             }
@@ -153,6 +224,7 @@ public class AllPostActivityAgent extends AppCompatActivity {
     {
         TextView productname, productprice, productdate;
         ImageView productimage;
+        LinearLayout layout_action1,layout_action2;
 
         public PostsViewHolder(View itemView)
         {
@@ -162,6 +234,8 @@ public class AllPostActivityAgent extends AppCompatActivity {
             productprice = itemView.findViewById(R.id.post_product_price);
             productdate = itemView.findViewById(R.id.post_product_date);
             productimage = itemView.findViewById(R.id.post_product_image);
+            layout_action1 = itemView.findViewById(R.id.layout_action1);
+            layout_action2 = itemView.findViewById(R.id.layout_action2);
         }
     }
 }

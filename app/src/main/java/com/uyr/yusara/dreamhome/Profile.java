@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -40,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView profiletitlename;
     private EditText editTextEmail;
     private EditText editTextName;
     private EditText editTextphone;
@@ -72,6 +74,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         SettinguserRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
 
 
+        profiletitlename = (TextView) findViewById(R.id.profiletitlename);
+
         editTextEmail    = findViewById(R.id.edittext_email);
         editTextName   = findViewById(R.id.edittext_fullname);
         editTextphone    = findViewById(R.id.edittext_phone);
@@ -87,6 +91,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     if (document != null) {
                         Log.i("LOGGER",document.getString("email"));
 
+                        String myprofilenametitle = document.getString("name");
                         String myProfileemail = document.getString("email");
                         String myProfilename = document.getString("name");
                         String myProfilephone = document.getString("phone");
@@ -94,6 +99,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         editTextEmail.setText(myProfileemail);
                         editTextName.setText(myProfilename);
                         editTextphone.setText(myProfilephone);
+                        profiletitlename.setText(myprofilenametitle);
 
                     } else {
                         Log.d("LOGGER", "No such document");

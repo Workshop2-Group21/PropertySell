@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class AllPostActivity extends AppCompatActivity {
     private String currentUserid;
 
     private Toolbar mToolbar;
+    private ImageButton AddNewPostButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,19 @@ public class AllPostActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("House Lists");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        AddNewPostButton = (ImageButton)findViewById(R.id.btnPost);
+
+        AddNewPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent mainIntent = new Intent(AllPostActivity.this, PostActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
 
     }
 
@@ -110,7 +125,7 @@ public class AllPostActivity extends AppCompatActivity {
 
 
                 holder.productname.setText(model.getDescription());
-                holder.productprice.setText(model.getTime());
+                holder.productprice.setText("RM " + model.getPrice());
                 holder.productdate.setText(model.getDate());
                 Glide.with(AllPostActivity.this).load(model.getPostImage()).into(holder.productimage);
 
@@ -131,8 +146,8 @@ public class AllPostActivity extends AppCompatActivity {
 
                         Intent click_post = new Intent(AllPostActivity.this,ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
-/*                        click_post.putExtra("Description", Decrip);
-                        click_post.putExtra("Price", Price);
+                        click_post.putExtra("Description", Decrip);
+                   /*     click_post.putExtra("Price", Price);
                         click_post.putExtra("PropertyType", PropertyType);*/
                         click_post.putExtra("PostImage", PostImg);
 

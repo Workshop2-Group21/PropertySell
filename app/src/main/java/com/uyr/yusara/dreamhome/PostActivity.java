@@ -53,12 +53,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton SelectPostImage;
     private Button UpdatePostButton,propertytypeButton;
-    private EditText PostDescription,PostSize,PostPrice,PostDescription2;
+    private EditText PostDescription,PostSize,PostPrice,PostDescription2,PostAddress;
     private TextView Postproperty,Postbedroom, Postbathroom,Posttitletype,Postotherinfo;
 
     final static int gallerypick = 1;
     private Uri ImageUri;
-    private String Description,propertystring,bedroomstring,bathroomstring,titletypestring,otherinfostring,sizestring,pricestring,description2string;
+    private String Description,propertystring,bedroomstring,bathroomstring,titletypestring,otherinfostring,sizestring,pricestring,description2string,addressstring;
     private String downloadUrl,uriurl;
 
 
@@ -93,6 +93,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         SelectPostImage = findViewById(R.id.select_post);
         UpdatePostButton = findViewById(R.id.btnupdatepost);
         PostDescription = findViewById(R.id.edit_desc);
+        PostAddress = findViewById(R.id.edit_address);
         Postproperty = findViewById(R.id.edit_property);
         Postbedroom = findViewById(R.id.edit_bedrooms);
         Postbathroom = findViewById(R.id.edit_bathrooms);
@@ -167,6 +168,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     public void UpdateBtnPost()
     {
         Description = PostDescription.getText().toString();
+        addressstring = PostAddress.getText().toString();
         propertystring = Postproperty.getText().toString();
         bedroomstring = Postbedroom.getText().toString();
         bathroomstring = Postbathroom.getText().toString();
@@ -521,6 +523,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         postMap.put("date", saveCurrentDate);
                         postMap.put("time", saveCurrentTime);
                         postMap.put("description", Description);
+                        postMap.put("address",addressstring);
                         postMap.put("propertytype", propertystring);
                         postMap.put("bedrooms", bedroomstring);
                         postMap.put("bathroom", bathroomstring);

@@ -13,7 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,8 @@ import com.uyr.yusara.dreamhome.Modal.User;
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import technolifestyle.com.imageslider.FlipperLayout;
+import technolifestyle.com.imageslider.FlipperView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DocumentReference UsersRef;
 
     private CircleImageView NavProfileImage;
+
+    ViewFlipper flipper2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 */
+
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
@@ -95,8 +103,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
+        int images[] = {R.drawable.promo1,R.drawable.promo2,R.drawable.promo3};
+
+        flipper2 = findViewById(R.id.flipper2);
+
+        for (int i = 0; i < images.length; i++)
+        {
+            flipperImages(images[i]);
+        }
 
     }
+
+    public void flipperImages(int image)
+    {
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        flipper2.addView(imageView);
+        flipper2.setFlipInterval(4000);
+        flipper2.setAutoStart(true);
+
+        flipper2.setInAnimation(this, android.R.anim.slide_in_left);
+        flipper2.setOutAnimation(this, android.R.anim.slide_in_left);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -145,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+/*        if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -174,25 +204,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent sell = new Intent(MainActivity.this, PostActivity.class);
             startActivity(sell);
 
-        } else if (id == R.id.nav_find) {
+        } else if (id == R.id.nav_onsell) {
+
+            Intent onsell = new Intent(MainActivity.this, AllPostActivity.class);
+            startActivity(onsell);
+
+        }else if (id == R.id.nav_find) {
 
             Intent allpost = new Intent(MainActivity.this, FindHouseActivity .class);
             startActivity(allpost);
 
-        } else if (id == R.id.nav_fav) {
+        } else if (id == R.id.nav_mysellitem) {
+
+            Intent find = new Intent(MainActivity.this,  AllPostActivityAgent.class);
+            startActivity(find);
+
+        }else if (id == R.id.nav_fav) {
 
             Intent post = new Intent(MainActivity.this, PostActivity.class);
             startActivity(post);
 
         } else if (id == R.id.nav_share) {
-
-            Intent post = new Intent(MainActivity.this, AllPostActivity.class);
+            Intent post = new Intent(MainActivity.this, AllAgentList.class);
             startActivity(post);
+
 
         } else if (id == R.id.nav_about) {
 
-            Intent details = new Intent(MainActivity.this, AllPostActivityAgent.class);
-            startActivity(details);
 
         } else if (id == R.id.nav_logout) {
 
