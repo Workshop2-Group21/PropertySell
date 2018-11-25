@@ -1,9 +1,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPrimaryDark" />
+            <solid android:color="@color/fui_bgTwitter" />
             <corners android:radius="10dp" />
-            <stroke android:width="2dp" android:color="@color/colorPrimaryDark" />
+            <stroke android:width="2dp" android:color="@color/fui_bgTwitter" />
         </shape>
     </item>
 </selector>

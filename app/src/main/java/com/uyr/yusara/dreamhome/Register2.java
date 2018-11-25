@@ -56,7 +56,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         final String phone = editTextPhone.getText().toString().trim();
-        final String roles = "0";
+        final String role = "agent";
+        final String profileimages2 = "0";
 
         if (name.isEmpty()) {
             editTextName.setError(getString(R.string.input_error_name));
@@ -114,7 +115,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
                                     name,
                                     email,
                                     phone,
-                                    roles
+                                    role,
+                                    profileimages2
 
                             );
 

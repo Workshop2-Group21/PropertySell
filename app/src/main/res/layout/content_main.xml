@@ -19,10 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <ViewFlipper
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/flipper2"
+                    ></ViewFlipper>
 
                 <TextView
                     android:id="@+id/textView4"
@@ -76,7 +84,7 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Conversation"
+                            android:text="Bungalow"
                             android:textAlignment="center" />
 
                         <ImageButton
@@ -103,7 +111,7 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Shopping"
+                            android:text="Single Storey"
                             android:textAlignment="center" />
 
                         <ImageButton
@@ -130,7 +138,7 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Direction"
+                            android:text="Triple Storey"
                             android:textAlignment="center" />
 
 
@@ -160,7 +168,7 @@
                             android:adjustViewBounds="true"
                             android:backgroundTint="@color/lime"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/h5" />
+                            app:srcCompat="@drawable/h8" />
 
                         <ImageButton
                             android:id="@+id/img6"
@@ -186,7 +194,7 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Dating"
+                            android:text="2/1 Storey"
                             android:textAlignment="center" />
 
                         <TextView
@@ -199,7 +207,7 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Color"
+                            android:text="Semi detached"
                             android:textAlignment="center" />
 
                         <TextView
@@ -212,10 +220,10 @@
                             android:layout_columnWeight="1"
                             android:layout_gravity="fill"
                             android:gravity="top"
-                            android:text="Sport"
+                            android:text="Others"
                             android:textAlignment="center" />
 
-                        <ImageButton
+<!--                        <ImageButton
                             android:id="@+id/img7"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
@@ -241,7 +249,7 @@
                             android:adjustViewBounds="true"
                             android:backgroundTint="@color/lime"
                             android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/h8" />
+                            app:srcCompat="@drawable/h5" />
 
                         <ImageButton
                             android:id="@+id/img9"
@@ -294,7 +302,7 @@
                             android:layout_gravity="fill"
                             android:gravity="top"
                             android:text="Food"
-                            android:textAlignment="center" />
+                            android:textAlignment="center" />-->
 
 
                     </GridLayout>

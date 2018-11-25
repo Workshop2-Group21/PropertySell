@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
         ccesplash = (ImageView)findViewById(R.id.ccesplash);
 
-        Animation anim = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        Animation anim = AnimationUtils.loadAnimation(this,R.anim.fadein);
         ccesplash.startAnimation(anim);
 
         new Handler().postDelayed(new Runnable() {

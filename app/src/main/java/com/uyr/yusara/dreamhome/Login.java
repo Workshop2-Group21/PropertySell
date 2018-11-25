@@ -1,14 +1,20 @@
 package com.uyr.yusara.dreamhome;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.uyr.yusara.dreamhome.Modal.Product;
 import com.uyr.yusara.dreamhome.Modal.User;
 
+
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     FirebaseAuth mAuth;
@@ -27,7 +34,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db;
 
+    private ImageView loginlogo;
+    private static int SPLASH_TIME_OUT = 3000;
+
     private Toolbar mToolbar;
+
+    private RelativeLayout R1,R2;
+    private Animation uptodown,downtoup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +49,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() !=null)
+        {
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -44,10 +65,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         findViewById(R.id.textResetPassword).setOnClickListener(this);
         findViewById(R.id.buttonLogin).setOnClickListener(this);
 
+        loginlogo = findViewById(R.id.loginlogo);
+        Animation anim = AnimationUtils.loadAnimation(this,R.anim.fadein);
+        loginlogo.startAnimation(anim);
+
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("DreamHome.com.my");
+        getSupportActionBar().setTitle(" Sign In To Our System");
 
+        R1 = (RelativeLayout) findViewById(R.id.R1);
+        R2 = (RelativeLayout) findViewById(R.id.R2);
+
+        uptodown = AnimationUtils.loadAnimation(this, R.anim.uptodown);
+        downtoup = AnimationUtils.loadAnimation(this, R.anim.downtoup);
+
+        R1.setAnimation(uptodown);
+        R2.setAnimation(downtoup);
 
     }
 
@@ -81,6 +114,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         progressBar.setVisibility(View.VISIBLE);
+
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {

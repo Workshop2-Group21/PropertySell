@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lime"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".PostActivity">
 
     <include
@@ -47,19 +48,24 @@
             android:layout_marginTop="354dp"
             android:layout_marginEnd="0dp"
             android:background="@drawable/edittext_background"></Spinner>-->
-
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/find_toolbar">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/fui_transparent"
-            android:orientation="vertical">
+            android:layout_below="@+id/find_toolbar">
 
-            <!--           <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/fui_transparent"
+                android:orientation="vertical">
+
+                <!--           <TextView
                 android:id="@+id/propertytypetitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,268 +75,457 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/select_post"
-                    android:layout_width="120dp"
-                    android:layout_height="110dp"
-                    android:layout_alignParentTop="true"
+                    <ImageButton
+                        android:id="@+id/select_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_above="@+id/title_id"
+                        android:layout_toEndOf="@+id/price_id"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/fui_idp_button_background_github"
+                        tools:ignore="MissingConstraints"
+                        tools:layout_editor_absoluteX="42dp"
+                        tools:layout_editor_absoluteY="16dp" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/silver"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="House Name :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_edit" />
+
+                    <EditText
+                        android:id="@+id/edit_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Ads Home"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/silver"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Address :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_location" />
+
+                    <EditText
+                        android:id="@+id/edit_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Address ..."
+                        android:layout_marginStart="20dp"
+                        android:inputType="textMultiLine"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/propertytypetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Property Type :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_home_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/edit_property"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Property Type"
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/bedroomstitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Bedrooms :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_bedroom" />
+
+                    <TextView
+                        android:id="@+id/edit_bedrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Bedroom no ..."
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/bathroomtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Bathroom :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_bathroom" />
+
+                    <TextView
+                        android:id="@+id/edit_bathrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Bathroom no ..."
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/titletypetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Title Type :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_dashboard_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/edit_titletype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Title Type ..."
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/titleotherinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Other Info :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:id="@+id/edit_otherinfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Title Type ..."
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/titlesize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Size in sqft :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_caculator" />
+
+                    <EditText
+                        android:id="@+id/edit_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Size ..."
+                        android:inputType="number"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/titleprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Price :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_price" />
+
+                    <EditText
+                        android:id="@+id/edit_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Price ..."
+                        android:inputType="number"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <TextView
+                    android:id="@+id/titleDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="75dp"
+                    android:text="Decription :"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_book" />
+
+                    <EditText
+                        android:id="@+id/edit_decription2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="Description - Include detals such as the Brand, Preference to do Cash on Delivery, Payment &amp; Postage Info, Estimated time of delivery of the good or services, Warrabty and Other T&amp;C"
+                        android:layout_marginStart="15dp"
+                        android:inputType="textMultiLine"
+                        android:textSize="15dp"
+                         />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/silver"
+                    />
+
+                <Button
+                    android:id="@+id/btnupdatepost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="41dp"
-                    android:background="@drawable/photo"
-                    android:scaleType="fitCenter" />
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="17dp"
+                    android:text="Post" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Title :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        </ScrollView>
+    </FrameLayout>
 
 
-            <EditText
-                android:id="@+id/edit_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint="Ad Title"
-                android:padding="5dp"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/propertytypetitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Property Type :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/edit_property"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint=""
-                android:padding="5dp"
-                android:text="Select Property Type"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/bedroomstitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Bedrooms :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/edit_bedrooms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint=""
-                android:padding="5dp"
-                android:text="Select No of Bedroom"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/bathroomtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Bathroom :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/edit_bathrooms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint=""
-                android:padding="5dp"
-                android:text="Select No of Bathroom"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/titletypetitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Title type :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/edit_titletype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint=""
-                android:padding="5dp"
-                android:text="Select Title Type"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/titleotherinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Other info :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/edit_otherinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint=""
-                android:padding="5dp"
-                android:text="Select Title Type"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/titlesize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Size :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edit_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint="Size in sq.ft"
-                android:padding="5dp"
-                android:text=""
-                android:textSize="20sp"
-                android:inputType="number"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/titlePrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Price :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edit_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edit_desc"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edittext_background"
-                android:ems="10"
-                android:fontFamily="cursive"
-                android:hint="RM ... "
-                android:padding="5dp"
-                android:text=""
-                android:textSize="20sp"
-                android:inputType="number"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/titleDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:text="Description :"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edit_decription2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="sans-serif"
-                android:hint="Description - Include detals such as the Brand, Preference to do Cash on Delivery, Payment &amp; Postage Info, Estimated time of delivery of the good or services, Warrabty and Other T&amp;C"
-                android:inputType="textMultiLine"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnupdatepost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginBottom="17dp"
-                android:text="Post" />
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+</LinearLayout>
