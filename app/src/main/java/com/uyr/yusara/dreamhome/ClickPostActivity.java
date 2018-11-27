@@ -47,15 +47,18 @@ import javax.annotation.Nullable;
 import static java.lang.Boolean.getBoolean;
 
 public class ClickPostActivity extends AppCompatActivity implements View.OnClickListener {
-    private String PostKey,Decrip, Price, PropertyType, BathRoom, Bedrooms, PostImage;
+    private String PostKey,Decrip, Price, PropertyType, BathRoom, Bedrooms, PostImage, uid;
     private ImageView postimages;
     private TextView Postdescription;
     private Button btnComment;
     //private CollectionReference ClickPostRef;
     private DocumentReference ClickPostRef; //,BookmarkPostRef;
+    private DocumentReference ClickAgentRef;
     private CollectionReference BookmarkPostRef;
     //private DatabaseReference BookmarkPostRef;
     private TextView Postpricetxt, Postpropertytypetxt, Postbathroomtxt, Postbedroomstxt, Postsizetxt, Postfirmtypetxt, Postfirmnumbertxt, PostDescription2txt,Postaddresstxt,Posttitletypetxt;
+    private TextView Postuser_id;
+    private TextView username;
     //private DatabaseReference ClickPostRef2;
 
 
@@ -67,6 +70,8 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
     private String currentUserid;
 
     private Toolbar mToolbar;
+
+    private String PostKeyUid;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -115,10 +120,15 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
         Posttitletypetxt = findViewById(R.id.otherinfo);
         PostDescription2txt = (TextView) findViewById(R.id.description_id);
 
+        Postuser_id = (TextView)findViewById(R.id.user_id);
+        username = (TextView)findViewById(R.id.username);
+
         btnComment = findViewById(R.id.btnSubmitComment);
 
         PostKey = getIntent().getExtras().get("PostKey").toString();
         Decrip = getIntent().getExtras().get("Description").toString();
+
+
       /*  Price = getIntent().getExtras().get("Price").toString();
         PropertyType = getIntent().getExtras().get("PropertyType").toString();*/
         PostImage = getIntent().getExtras().get("PostImage").toString();
@@ -142,8 +152,6 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-
-
             }
         });*/
 
@@ -157,6 +165,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
         //Postdescription.setText("Title : " + Decrip);
         Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
+
 
         ClickPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -172,6 +181,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                 String titletype = documentSnapshot.getString("titletype");
                 String otherinfo = documentSnapshot.getString("otherinfo");
                 String description2 = documentSnapshot.getString("description2");
+                uid = documentSnapshot.getString("uid");
 
                 Postdescription.setText(description);
                 Postpricetxt.setText("RM : " + price);
@@ -182,7 +192,24 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                 Postsizetxt.setText("\u2022 Size : " + size + "ft");
                 Posttitletypetxt.setText("\u2022 Title Type : " + titletype);
                 Postfirmtypetxt.setText("\u2022 Other Info : " + otherinfo);
+                Postuser_id.setText(uid);
                 PostDescription2txt.setText(description2);
+
+                //Untuk tarik userID dri textfield
+                PostKeyUid = Postuser_id.getText().toString();
+                Postuser_id.setText(PostKeyUid);
+                ClickAgentRef = FirebaseFirestore.getInstance().collection("Users").document(PostKeyUid);
+                Toast.makeText(ClickPostActivity.this, "User ID = " + PostKeyUid, Toast.LENGTH_SHORT).show();
+
+                ClickAgentRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
+                    {
+                        String name = documentSnapshot.getString("name");
+
+                        username.setText(name);
+                    }
+                });
             }
         });
 

@@ -122,16 +122,22 @@ public class FindHouseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        //String PostKey = getSnapshots().get(position).getUid();
+
+                        // Untuk dpat Id dalam table post
                         String PostKey = getSnapshots().getSnapshot(position).getId();
                         String Decrip = getSnapshots().get(position).getDescription();
                         String PostImg = getSnapshots().get(position).getPostImage();
-                        //String PostKey = getItem(position).getUid();
+                        String Price = getSnapshots().get(position).getPrice();
+                        String PropertyType = getSnapshots().get(position).getPropertytype();
 
-                        Intent click_post = new Intent(FindHouseActivity.this, ClickPostActivity.class);
+
+                        Intent click_post = new Intent(FindHouseActivity.this,ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
-                    //    click_post.putExtra("Description", Decrip);
+                        click_post.putExtra("Description", Decrip);
+                   /*     click_post.putExtra("Price", Price);
+                        click_post.putExtra("PropertyType", PropertyType);*/
                         click_post.putExtra("PostImage", PostImg);
+
                         startActivity(click_post);
                     }
                 });

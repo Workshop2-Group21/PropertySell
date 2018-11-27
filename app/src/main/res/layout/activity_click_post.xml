@@ -75,7 +75,7 @@
                         android:textSize="12dp" />
                 </LinearLayout>
 
-                <LinearLayout
+<!--                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -101,7 +101,7 @@
                         android:text="50 ratings \u0026 15 reviews"
                         android:textSize="12dp"/>
 
-                </LinearLayout>/
+                </LinearLayout>/-->
 
                 <View android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -139,6 +139,31 @@
                     <View android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/silver"/>
+
+                    <LinearLayout android:id="@+id/layout_action3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <ImageView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/wishlist"/>
+
+                        <TextView
+                            android:id="@+id/username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text="Agent Name"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
                 <View android:layout_width="match_parent"
@@ -224,12 +249,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Description all is type here, dont worry everything gonna be okay i think lol"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorButtonTransparent"/>
 
+                    <TextView
+                        android:id="@+id/user_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="userid"
                         android:textSize="12dp"
                         android:textColor="@color/colorButtonTransparent"/>
 
                 </LinearLayout>
+
             </LinearLayout>
+
+
         </ScrollView>
     </FrameLayout>
 
