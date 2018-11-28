@@ -231,6 +231,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_about) {
 
+            Intent googlemap = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(googlemap);
+
 
         } else if (id == R.id.nav_logout) {
 
