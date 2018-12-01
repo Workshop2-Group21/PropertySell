@@ -122,15 +122,18 @@
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="2">
-                        <ImageView android:layout_width="wrap_content"
+
+                        <ImageView
+                            android:id="@+id/wishlistbtn"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/wishlist"/>
+                            android:src="@drawable/wishlist" />
                         <TextView android:id="@+id/text_action1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="8dp"
-                            android:text="Add to Wishlist"
+                            android:text="Wishlist"
                             android:textSize="12dp"
                             android:textColor="@color/black"
                             android:gravity="left"/>
@@ -141,28 +144,26 @@
                         android:background="@color/silver"/>
 
                     <LinearLayout android:id="@+id/layout_action3"
-                        android:layout_width="0dp"
+                        android:layout_width="20dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="2">
-
                         <ImageView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/wishlist"/>
+                            android:src="@drawable/ic_location"/>
 
                         <TextView
-                            android:id="@+id/username"
+                            android:id="@+id/openmaps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:gravity="left"
-                            android:text="Agent Name"
-                            android:textColor="@color/black"
+                            android:text="Location"
+                            android:textColor="@color/blue"
                             android:textSize="12dp" />
-
                     </LinearLayout>
 
                 </LinearLayout>
@@ -261,19 +262,134 @@
                         android:textSize="12dp"
                         android:textColor="@color/colorButtonTransparent"/>
 
+                    <LinearLayout android:id="@+id/layout_action5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_post" />
+
+                        <TextView
+                            android:id="@+id/btnSubmitComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="18dp"
+                            android:text="Show all comments"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_action6"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorText"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/profile_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="40dp"
+                        android:src="@drawable/ic_menu_camera"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorText"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="10dp"
+
+                            android:text="Agent Name"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="5dp"
+
+                            android:text="Phone Number"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            android:textSize="10dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorText"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="30dp"
+                            android:text=" Email "
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            android:textSize="10dp" />
+
+                    </LinearLayout>
+
+
+
                 </LinearLayout>
 
             </LinearLayout>
-
-
         </ScrollView>
     </FrameLayout>
 
-            <Button
+<!--            <Button
                 android:id="@+id/btnSubmitComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comment" />
+                android:text="Comment" />-->
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

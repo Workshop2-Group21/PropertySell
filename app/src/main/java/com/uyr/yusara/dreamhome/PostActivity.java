@@ -46,6 +46,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -68,6 +69,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private String currentUserid;
     private DocumentReference UsersRef;
     private CollectionReference Postsref;
+    private CollectionReference NotisRef;
 
     private int countPosts = 0;
 
@@ -89,6 +91,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
         Postsref = FirebaseFirestore.getInstance().collection("Posts");
+        NotisRef = FirebaseFirestore.getInstance().collection("Notification");
 
         SelectPostImage = findViewById(R.id.select_post);
         UpdatePostButton = findViewById(R.id.btnupdatepost);
@@ -545,6 +548,22 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                                 if (task.isSuccessful())
                                 {
                                     Toast.makeText(PostActivity.this, "Post update successfully ", Toast.LENGTH_SHORT).show();
+
+                                    HashMap postnotification = new HashMap();
+                                    postnotification.put("from",currentUserid);
+                                    postnotification.put("type","request");
+
+                                    NotisRef.document().set(postnotification).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task)
+                                        {
+                                         if(task.isSuccessful())
+                                         {
+                                             Toast.makeText(PostActivity.this, "Notification Work!", Toast.LENGTH_SHORT).show();
+                                             
+                                         }
+                                        }
+                                    });
                                 }
                                 else
                                 {
