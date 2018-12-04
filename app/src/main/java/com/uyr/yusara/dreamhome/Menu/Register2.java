@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.uyr.yusara.dreamhome.Modal.User;
 import com.uyr.yusara.dreamhome.R;
 
@@ -40,6 +41,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.button_register).setOnClickListener(this);
+
     }
 
     @Override
@@ -59,6 +61,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         final String role = "agent";
         final String profileimages2 = "https://firebasestorage.googleapis.com/v0/b/dreamhome-a806d.appspot.com/o/profile%20Images%2Fnophoto.png?alt=media&token=724e2036-5419-4eef-bbeb-d8b0083ea123";
         final String profiledescription = "";
+        final String devicetoken = FirebaseInstanceId.getInstance().getToken();
 
         if (name.isEmpty()) {
             editTextName.setError(getString(R.string.input_error_name));
@@ -118,7 +121,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
                                     phone,
                                     role,
                                     profileimages2,
-                                    profiledescription
+                                    profiledescription,
+                                    devicetoken
 
                             );
 

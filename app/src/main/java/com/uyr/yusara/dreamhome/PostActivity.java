@@ -572,7 +572,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
                                     HashMap postnotification = new HashMap();
                                     postnotification.put("from",currentUserid);
-                                    postnotification.put("type","request");
+                                    postnotification.put("type","new post noti");
 
                                     NotisRef.document().set(postnotification).addOnCompleteListener(new OnCompleteListener() {
                                         @Override

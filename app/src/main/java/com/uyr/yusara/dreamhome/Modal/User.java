@@ -7,13 +7,15 @@ public class User {
     public String role;
     public String profileimage2;
     public String profiledescription;
+    public String devicetoken;
+
 
     public User()
     {
 
     }
 
-    public User(String name, String email, String phone, String role,String profileimage2, String profiledescription) {
+    public User(String name, String email, String phone, String role,String profileimage2, String profiledescription, String devicetoken) {
 
         this.name = name;
         this.email = email;
@@ -21,6 +23,15 @@ public class User {
         this.role = role;
         this.profileimage2 = profileimage2;
         this.profiledescription = profiledescription;
+        this.devicetoken = devicetoken;
+    }
+
+    public String getDevicetoken() {
+        return devicetoken;
+    }
+
+    public void setDevicetoken(String devicetoken) {
+        this.devicetoken = devicetoken;
     }
 
     public String getProfileimage() {

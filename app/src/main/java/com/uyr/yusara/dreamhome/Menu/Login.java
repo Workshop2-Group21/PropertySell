@@ -18,7 +18,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.R;
 
@@ -121,6 +124,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 progressBar.setVisibility(View.GONE);
 
                 if (task.isSuccessful() && roles=="0") {
+
+
+
                     finish();
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
