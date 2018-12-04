@@ -1,7 +1,6 @@
-package com.uyr.yusara.dreamhome;
+package com.uyr.yusara.dreamhome.Menu;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,18 +11,19 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.uyr.yusara.dreamhome.Modal.Product;
-import com.uyr.yusara.dreamhome.Modal.User;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.uyr.yusara.dreamhome.MainActivity;
+import com.uyr.yusara.dreamhome.R;
 
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
@@ -124,6 +124,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 progressBar.setVisibility(View.GONE);
 
                 if (task.isSuccessful() && roles=="0") {
+
+
+
                     finish();
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +77,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private String saveCurrentDate, saveCurrentTime, postRandomName;
 
     private Toolbar mToolbar;
-
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -106,6 +107,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         PostPrice = findViewById(R.id.edit_price);
         PostDescription2 = findViewById(R.id.edit_decription2);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
         findViewById(R.id.select_post).setOnClickListener(this);
         findViewById(R.id.btnupdatepost).setOnClickListener(this);
         findViewById(R.id.edit_property).setOnClickListener(this);
@@ -122,7 +125,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setTitle(" Sell House");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
 
     }
 
@@ -186,13 +188,25 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         {
             Toast.makeText(this, "Please select Image ...",Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(Description))
+        if(Description.isEmpty())
         {
-            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+            PostDescription.setError("Please add housename");
+            PostDescription.requestFocus();
+            return;
         }
-        if(TextUtils.isEmpty(propertystring))
+        if(addressstring.isEmpty())
         {
-            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+            PostAddress.setError("Please enter the address");
+            PostDescription.requestFocus();
+            return;
+        }
+        if(propertystring.isEmpty())
+        {
+            PostSize.setError("Please select property type");
+            PostSize.requestFocus();
+            Toast.makeText(this, "Please select property type",Toast.LENGTH_SHORT).show();
+            return;
+
         }
         if(TextUtils.isEmpty(bedroomstring))
         {
@@ -210,17 +224,22 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         {
             Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(sizestring))
+        if(sizestring.isEmpty())
         {
-            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+            Postproperty.setError("Please insert sizes");
+            Postproperty.requestFocus();
+            return;
         }
-        if(TextUtils.isEmpty(pricestring))
+        if(pricestring.isEmpty())
         {
-            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+            PostPrice.setError("Please insert sizes");
+            PostPrice.requestFocus();
+
         }
-        if(TextUtils.isEmpty(description2string))
+        if(description2string.isEmpty())
         {
-            Toast.makeText(this, "Please enter something...",Toast.LENGTH_SHORT).show();
+            PostDescription2.setError("Please insert sizes");
+            PostDescription2.requestFocus();
         }
         else
             {
@@ -276,7 +295,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     "Bungalow",
                     "Single storey",
-                    "Two and a half storey",
+                    "2/1 storey",
                     "Triple storey",
                     "Semi detached",
                     "Others"
@@ -542,6 +561,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
                         Toast.makeText(PostActivity.this, "Masuk Saving Post info ", Toast.LENGTH_SHORT).show();
 
+
                         Postsref.add(postMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
@@ -549,9 +569,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                                 {
                                     Toast.makeText(PostActivity.this, "Post update successfully ", Toast.LENGTH_SHORT).show();
 
+
                                     HashMap postnotification = new HashMap();
                                     postnotification.put("from",currentUserid);
-                                    postnotification.put("type","request");
+                                    postnotification.put("type","new post noti");
 
                                     NotisRef.document().set(postnotification).addOnCompleteListener(new OnCompleteListener() {
                                         @Override

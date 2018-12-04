@@ -68,6 +68,8 @@ public class AllPostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
+
         AddNewPostButton = (ImageButton)findViewById(R.id.btnPost);
 
         AddNewPostButton.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +115,8 @@ public class AllPostActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
                 .setQuery(Postsref,Posts.class)
                 .build();*/
+
+
 
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
                 .setQuery(SortPostsInDecendingOrder,Posts.class)

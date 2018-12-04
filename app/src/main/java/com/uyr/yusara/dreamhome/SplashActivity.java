@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.uyr.yusara.dreamhome.Modal.Product;
+import com.uyr.yusara.dreamhome.Menu.Login;
 
 public class SplashActivity extends AppCompatActivity {
 

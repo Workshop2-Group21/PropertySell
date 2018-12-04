@@ -13,7 +13,6 @@
 
     </include>
 
-
     <RelativeLayout
         android:id="@+id/myLayout"
         android:layout_width="match_parent"
@@ -26,11 +25,11 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_alignParentEnd="true"
-           android:layout_marginLeft="2dp"
+           android:layout_marginLeft="5dp"
+           android:layout_marginStart="25dp"
            android:text="Search your type of house"
            android:textColor="@color/black"
            android:textSize="18sp"
-           android:textStyle="bold"
            />
 
         <EditText
@@ -45,8 +44,8 @@
             android:hint=" search here"
             android:inputType="textMultiLine"
             android:padding="10dp"
-            android:textColor="@color/aqua"
-            android:textColorHint="@color/aqua" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <ImageButton
 

@@ -78,11 +78,13 @@ public class MapsActivity extends FragmentActivity implements
 
     public void onClick(View v)
     {
-        String transport = "transport";
+        String transport = "train_station";
         String school = "school";
         String restaurant = "restaurant";
-        String shop = "shop";
-        String pray = "pray";
+        String shop = "shopping_mall";
+        String worship = "mosque";
+        String hospital = "hospital";
+
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
 
@@ -161,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements
                 break;
 
             case R.id.food:
-                mMap.clear();
+                //mMap.clear();
                 url = getURL(latitude,longitude,restaurant);
                 transferData[0] = mMap;
                 transferData[1] = url;
@@ -170,6 +172,35 @@ public class MapsActivity extends FragmentActivity implements
                 Toast.makeText(this, "Searching for nearby restaurant", Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "Showing Nearby restaurant", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.shop:
+                //mMap.clear();
+                url = getURL(latitude,longitude,shop);
+                transferData[0] = mMap;
+                transferData[1] = url;
+
+                getNearbyPlaces.execute(transferData);
+                Toast.makeText(this, "Searching for nearby shopping complex", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Showing Nearby shopping", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.worship:
+                url = getURL(latitude,longitude,worship);
+                transferData[0] = mMap;
+                transferData[1] = url;
+
+                getNearbyPlaces.execute(transferData);
+                Toast.makeText(this, "Searching for nearby mosque", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Showing Nearby mosque", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.hospital:
+                url = getURL(latitude,longitude,hospital);
+                transferData[0] = mMap;
+                transferData[1] = url;
+
+                getNearbyPlaces.execute(transferData);
+                Toast.makeText(this, "Searching for nearby mosque", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Showing Nearby mosque", Toast.LENGTH_LONG).show();
+                break;
+
         }
     }
 

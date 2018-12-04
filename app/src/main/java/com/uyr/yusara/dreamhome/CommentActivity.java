@@ -192,7 +192,7 @@ public class CommentActivity extends AppCompatActivity {
         public void setDate(String date)
         {
             TextView mydate = (TextView) itemView.findViewById(R.id.comment_date);
-            mydate.setText("  Date: "+date);
+            mydate.setText(date);
         }
 
         public void setTime(String time)

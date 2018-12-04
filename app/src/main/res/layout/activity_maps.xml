@@ -101,13 +101,13 @@
             android:src="@drawable/ic_mosque"/>
 
         <ImageButton
-            android:id="@+id/medical"
+            android:id="@+id/hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/worship"
             android:onClick="onClick"
-            android:src="@drawable/ic_emergency"/>
+            android:src="@drawable/ic_emergency" />
 
 
 
