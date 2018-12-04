@@ -6,18 +6,21 @@ public class User {
     public String phone;
     public String role;
     public String profileimage2;
+    public String profiledescription;
 
     public User()
     {
 
     }
 
-    public User(String name, String email, String phone, String role,String profileimage2) {
+    public User(String name, String email, String phone, String role,String profileimage2, String profiledescription) {
+
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.role = role;
         this.profileimage2 = profileimage2;
+        this.profiledescription = profiledescription;
     }
 
     public String getProfileimage() {
@@ -59,5 +62,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getProfiledescription() {
+        return profiledescription;
+    }
+
+    public void setProfiledescription(String profiledescription) {
+        this.profiledescription = profiledescription;
     }
 }

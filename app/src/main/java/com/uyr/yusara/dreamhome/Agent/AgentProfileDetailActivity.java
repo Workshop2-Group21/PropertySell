@@ -1,15 +1,14 @@
-package com.uyr.yusara.dreamhome;
+package com.uyr.yusara.dreamhome.Agent;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.uyr.yusara.dreamhome.Modal.User;
-
-import java.util.HashMap;
+import com.uyr.yusara.dreamhome.R;
 
 import javax.annotation.Nullable;
 
@@ -46,6 +43,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
     private DocumentReference ClickPostRef;
     private DocumentReference RoleRef;
+    private CollectionReference Postsref;
     private FirebaseAuth mAuth;
 
     private String currentUserid;
@@ -54,7 +52,11 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
     private String PostKey, CURRENT_STATE, agent;
 
-    private Button ApproveAgentBtn,RemoveAgentBtn;
+    private Button unitsale,RemoveAgentBtn;
+
+    private String AgentName;
+
+    private int countPosts = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,21 +65,21 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
         // Code gambar
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile Images");
-        ProfileImage    = findViewById(R.id.agentprofileimage);
+        ProfileImage = findViewById(R.id.agentprofileimage);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
-
-        agent=
 
         PostKey = getIntent().getExtras().get("PostKey").toString();
         ClickPostRef = FirebaseFirestore.getInstance().collection("Users").document(PostKey);
         RoleRef = FirebaseFirestore.getInstance().collection("Users").document(PostKey);
 
+
+        unitsale = findViewById(R.id.button_sales);
+
         IntializeFields();
 
-        findViewById(R.id.button_approve).setOnClickListener(this);
-        findViewById(R.id.button_remove).setOnClickListener(this);
+        findViewById(R.id.button_sales).setOnClickListener(this);
 
 
         mToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.find_toolbar);
@@ -92,8 +94,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
         ClickPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
-            {
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 String email = documentSnapshot.getString("email");
                 String fullname = documentSnapshot.getString("name");
                 String phone = documentSnapshot.getString("phone");
@@ -101,6 +102,31 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
                 agent_email.setText(email);
                 agent_fullname.setText(fullname);
                 agent_phone.setText(phone);
+
+/*                Postsref = FirebaseFirestore.getInstance().collection("Posts").document().collection(PostKey);
+
+                Postsref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful())
+                        {
+                            QuerySnapshot document = task.getResult();
+                            if (document != null)
+                            {
+                                countPosts = document.size();
+                                unitsale.setText(Integer.toString(countPosts));
+                                Toast.makeText(AgentProfileDetailActivity.this, "Post = " + countPosts, Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+                                countPosts = 0;
+                            }
+                        }
+                    }
+                });*/
+
             }
         });
 
@@ -108,79 +134,49 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                if(documentSnapshot.exists())
+                if (documentSnapshot.exists())
                 {
                     String image = documentSnapshot.getString("profileimage2");
                     Glide.with(AgentProfileDetailActivity.this).load(image).into(ProfileImage);
+
                 }
 
             }
         });
 
-        RemoveAgentBtn.setVisibility(View.INVISIBLE);
-        RemoveAgentBtn.setEnabled(false);
+
+
 
         RoleRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task)
-            {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
                         String role = document.getString("role");
 
-                        Toast.makeText(AgentProfileDetailActivity.this, "Work :D " + role , Toast.LENGTH_SHORT).show();
-
-                        if(!RoleRef.equals(role))
-                        {
-                            RemoveAgentBtn.setVisibility(View.VISIBLE);
-                            RemoveAgentBtn.setEnabled(false);
-
-                        }
+                        Toast.makeText(AgentProfileDetailActivity.this, "Work :D " + role, Toast.LENGTH_SHORT).show();
 
 
-                    } else
-                        {
-                            Toast.makeText(AgentProfileDetailActivity.this, "x work :(" , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AgentProfileDetailActivity.this, "x work :(", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
 
                 }
-
             }
         });
 
 
-
-        if(!currentUserid.equals(RoleRef))
-        {
-
-
-            ApproveAgentBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    ApproveAgentBtn.setEnabled(false);
-                }
-            });
-        }
-        else
-            {
-                RemoveAgentBtn.setVisibility(View.INVISIBLE);
-                ApproveAgentBtn.setVisibility(View.INVISIBLE);
-            }
-
     }
+
 
     private void IntializeFields() {
 
         agent_email    = findViewById(R.id.agent_email);
         agent_fullname   = findViewById(R.id.agent_fullname);
         agent_phone    = findViewById(R.id.agent_phone);
-
-        ApproveAgentBtn = findViewById(R.id.button_approve);
-        RemoveAgentBtn = findViewById(R.id.button_remove);
 
         CURRENT_STATE = "not_agents";
 
@@ -199,18 +195,15 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
     }
 
 
-    private void RemoveBtnPost()
-    {
-
-    }
-
     @Override
     public void onClick(View v) {
 
         switch (v.getId())
         {
-            case R.id.button_remove:
-                RemoveBtnPost();
+            case R.id.button_sales:
+                Intent onsell = new Intent(AgentProfileDetailActivity.this, AllAgentListFromProfile.class);
+                onsell.putExtra("PassAgentName", agent_fullname.getText().toString());
+                startActivity(onsell);
                 break;
             case R.id.button_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -229,8 +222,6 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
                     }
                 });
-
-
                 AlertDialog ad = builder.create();
                 ad.show();
                 break;

@@ -9,7 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />﻿
+    <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
+    ﻿
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -35,9 +36,9 @@
         </activity>
         <activity android:name=".TestFireBaseActivity" />
         <activity android:name=".RecyclerViewTest.RecycleViewTest" />
-        <activity android:name=".Login" />
+        <activity android:name=".Menu.Login" />
         <activity android:name=".Modal.Product$Register" />
-        <activity android:name=".Register2" />
+        <activity android:name=".Menu.Register2" />
         <activity android:name=".ProductsActitvity" />
         <activity android:name=".UpdateProductActivity" />
         <activity
@@ -51,14 +52,14 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".AllPostActivity" />
         <activity android:name=".ClickPostActivity" />
-        <activity android:name=".AllPostActivityAgent" />
+        <activity android:name=".Agent.AllPostActivityAgent" />
         <activity android:name=".FindHouseActivity" />
         <activity android:name=".CommentActivity" />
-        <activity android:name=".ClickPostActivityAgent" />
-        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".Agent.ClickPostActivityAgent" />
+        <activity android:name=".Menu.ResetPasswordActivity" />
         <activity android:name=".testflip" />
-        <activity android:name=".AllAgentList" />
-        <activity android:name=".AgentProfileDetailActivity" />
+        <activity android:name=".Agent.AllAgentList" />
+        <activity android:name=".Agent.AgentProfileDetailActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -73,7 +74,15 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".Customer.MainActivityCustomer"
+            android:label="@string/title_activity_main_customer"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".AllPostActivity2" />
+        <activity android:name=".Agent.AllAgentListFromProfile" />
+        <activity android:name=".News.NewsMainActivity" />
+        <activity android:name=".News.DetailsActivity"></activity>
     </application>
 
 </manifest>

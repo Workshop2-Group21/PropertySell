@@ -174,6 +174,7 @@ public class FindHouseActivity extends AppCompatActivity {
         {
             ImageView myImage = (ImageView) itemView.findViewById(R.id.post_product_image);
             Glide.with(ctx).load(profileImage2).into(myImage);
+
             //Glide.with(FindHouseActivity.this).load(ctx).into(myImage);
         }
 

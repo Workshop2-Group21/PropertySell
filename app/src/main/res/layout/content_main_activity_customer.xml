@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context=".Customer.MainActivityCustomer"
+    tools:showIn="@layout/app_bar_main_activity_customer">
 
     <FrameLayout
         android:id="@+id/screen_area"
@@ -75,7 +75,7 @@
                             app:srcCompat="@drawable/h1" />
 
                         <TextView
-                            android:id="@+id/bungtext"
+                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -102,7 +102,7 @@
                             app:srcCompat="@drawable/h2" />
 
                         <TextView
-                            android:id="@+id/singletext"
+                            android:id="@+id/shopping"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -129,7 +129,7 @@
                             app:srcCompat="@drawable/h3" />
 
                         <TextView
-                            android:id="@+id/tripletext"
+                            android:id="@+id/direction"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -185,7 +185,7 @@
                             app:srcCompat="@drawable/h6" />
 
                         <TextView
-                            android:id="@+id/halfstoreytext"
+                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"
@@ -198,7 +198,7 @@
                             android:textAlignment="center" />
 
                         <TextView
-                            android:id="@+id/semitexr"
+                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"
@@ -211,7 +211,7 @@
                             android:textAlignment="center" />
 
                         <TextView
-                            android:id="@+id/otherstext"
+                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"
@@ -223,86 +223,86 @@
                             android:text="Others"
                             android:textAlignment="center" />
 
-<!--                        <ImageButton
-                            android:id="@+id/img7"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="4"
-                            android:layout_rowWeight="1"
-                            android:layout_column="0"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="@color/lime"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/h7" />
+                        <!--                        <ImageButton
+                                                    android:id="@+id/img7"
+                                                    android:layout_width="100dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_row="4"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="0"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="center"
+                                                    android:adjustViewBounds="true"
+                                                    android:backgroundTint="@color/lime"
+                                                    android:scaleType="fitCenter"
+                                                    app:srcCompat="@drawable/h7" />
 
-                        <ImageButton
-                            android:id="@+id/img8"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="4"
-                            android:layout_rowWeight="1"
-                            android:layout_column="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="@color/lime"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/h5" />
+                                                <ImageButton
+                                                    android:id="@+id/img8"
+                                                    android:layout_width="100dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_row="4"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="1"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="center"
+                                                    android:adjustViewBounds="true"
+                                                    android:backgroundTint="@color/lime"
+                                                    android:scaleType="fitCenter"
+                                                    app:srcCompat="@drawable/h5" />
 
-                        <ImageButton
-                            android:id="@+id/img9"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_row="4"
-                            android:layout_rowWeight="1"
-                            android:layout_column="2"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="@color/lime"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/h9" />
+                                                <ImageButton
+                                                    android:id="@+id/img9"
+                                                    android:layout_width="100dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_row="4"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="2"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="center"
+                                                    android:adjustViewBounds="true"
+                                                    android:backgroundTint="@color/lime"
+                                                    android:scaleType="fitCenter"
+                                                    app:srcCompat="@drawable/h9" />
 
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:layout_row="5"
-                            android:layout_rowWeight="1"
-                            android:layout_column="0"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="fill"
-                            android:gravity="top"
-                            android:text="Ninja"
-                            android:textAlignment="center" />
+                                                <TextView
+                                                    android:id="@+id/textView2"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="30dp"
+                                                    android:layout_row="5"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="0"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="fill"
+                                                    android:gravity="top"
+                                                    android:text="Ninja"
+                                                    android:textAlignment="center" />
 
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:layout_row="5"
-                            android:layout_rowWeight="1"
-                            android:layout_column="1"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="fill"
-                            android:gravity="top"
-                            android:text="Date and Time"
-                            android:textAlignment="center" />
+                                                <TextView
+                                                    android:id="@+id/textView2"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="30dp"
+                                                    android:layout_row="5"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="1"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="fill"
+                                                    android:gravity="top"
+                                                    android:text="Date and Time"
+                                                    android:textAlignment="center" />
 
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:layout_row="5"
-                            android:layout_rowWeight="1"
-                            android:layout_column="2"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="fill"
-                            android:gravity="top"
-                            android:text="Food"
-                            android:textAlignment="center" />-->
+                                                <TextView
+                                                    android:id="@+id/textView2"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="30dp"
+                                                    android:layout_row="5"
+                                                    android:layout_rowWeight="1"
+                                                    android:layout_column="2"
+                                                    android:layout_columnWeight="1"
+                                                    android:layout_gravity="fill"
+                                                    android:gravity="top"
+                                                    android:text="Food"
+                                                    android:textAlignment="center" />-->
 
 
                     </GridLayout>

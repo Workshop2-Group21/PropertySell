@@ -24,49 +24,66 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.uyr.yusara.dreamhome.Modal.Posts;
-import com.uyr.yusara.dreamhome.Modal.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AllAgentList extends AppCompatActivity {
+public class AllPostActivity2 extends AppCompatActivity {
 
-    private RecyclerView agentList;
+    private RecyclerView postList;
 
     private DocumentReference UsersRef;
-    private CollectionReference Postsref;
-    private CollectionReference Agentsref;
+    private CollectionReference Postsref,allUserDatabaseRef;
+    private CollectionReference Postsref2;
 
     private FirebaseAuth mAuth;
     private String currentUserid;
 
     private Toolbar mToolbar;
+    private ImageButton AddNewPostButton;
+
+    private String HouseType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_agent_list);
+        setContentView(R.layout.activity_all_post2);
 
-        agentList = findViewById(R.id.recyclerview_allagentlist);
-        agentList.setHasFixedSize(true);
+        postList = findViewById(R.id.recyclerview_allpost);
+        postList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        agentList.setLayoutManager(linearLayoutManager);
+        postList.setLayoutManager(linearLayoutManager);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
 
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
-        //Postsref = FirebaseFirestore.getInstance().collection("Posts");
-        Agentsref = FirebaseFirestore.getInstance().collection("Users");
+        Postsref = FirebaseFirestore.getInstance().collection("Posts");
+        allUserDatabaseRef = FirebaseFirestore.getInstance().collection("Posts");
         //Postsref = FirebaseDatabase.getInstance().getReference().child("Posts");
 
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Agent Lists");
+        getSupportActionBar().setTitle("House Lists");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        AddNewPostButton = (ImageButton) findViewById(R.id.btnPost);
+
+        AddNewPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent mainIntent = new Intent(AllPostActivity2.this, PostActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
+
+        Bundle extras = getIntent().getExtras();
+        HouseType = (String) extras.get("PostBungalow");
 
     }
 
@@ -81,7 +98,7 @@ public class AllAgentList extends AppCompatActivity {
     }
 
     private void SendUserToMainActivity() {
-        Intent mainIntent = new Intent(AllAgentList.this, MainActivity.class);
+        Intent mainIntent = new Intent(AllPostActivity2.this, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
         finish();
@@ -93,24 +110,28 @@ public class AllAgentList extends AppCompatActivity {
 
         //Query SortPostsInDecendingOrder = Postsref.orderBy("counter");
 
+
+
+        Query searchHouseTypeQuery = allUserDatabaseRef.orderBy("propertytype").startAt(HouseType).endAt(HouseType + "\uf8ff");
+
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
                 .setQuery(Postsref,Posts.class)
                 .build();*/
 
-        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
-                .setQuery(Agentsref, User.class)
+        FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
+                .setQuery(searchHouseTypeQuery, Posts.class)
                 .build();
 
-        FirestoreRecyclerAdapter<User, AllAgentList.PostsViewHolder> adapter = new FirestoreRecyclerAdapter<User, AllAgentList.PostsViewHolder>(options) {
+        FirestoreRecyclerAdapter<Posts, AllPostActivity.PostsViewHolder> adapter = new FirestoreRecyclerAdapter<Posts, AllPostActivity.PostsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull AllAgentList.PostsViewHolder holder, final int position, @NonNull User model) {
+            protected void onBindViewHolder(@NonNull AllPostActivity.PostsViewHolder holder, final int position, @NonNull Posts model) {
 
 
-                holder.productname.setText(model.getName());
-/*                holder.productprice.setText("RM " + model.getPrice());
-                holder.productdate.setText(model.getDate());*/
-                Glide.with(AllAgentList.this).load(model.getProfileimage()).into(holder.productimage);
+                holder.productname.setText(model.getDescription());
+                holder.productprice.setText("RM " + model.getPrice());
+                holder.productdate.setText(model.getDate());
+                Glide.with(AllPostActivity2.this).load(model.getPostImage()).into(holder.productimage);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -120,10 +141,18 @@ public class AllAgentList extends AppCompatActivity {
 
                         // Untuk dpat Id dalam table post
                         String PostKey = getSnapshots().getSnapshot(position).getId();
+                        String Decrip = getSnapshots().get(position).getDescription();
+                        String PostImg = getSnapshots().get(position).getPostImage();
+                        String Price = getSnapshots().get(position).getPrice();
+                        String PropertyType = getSnapshots().get(position).getPropertytype();
 
 
-                        Intent click_post = new Intent(AllAgentList.this, AgentProfileDetailActivity.class);
+                        Intent click_post = new Intent(AllPostActivity2.this, ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
+                        click_post.putExtra("Description", Decrip);
+                   /*     click_post.putExtra("Price", Price);
+                        click_post.putExtra("PropertyType", PropertyType);*/
+                        click_post.putExtra("PostImage", PostImg);
 
                         startActivity(click_post);
                     }
@@ -132,29 +161,30 @@ public class AllAgentList extends AppCompatActivity {
 
             @NonNull
             @Override
-            public AllAgentList.PostsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_agentlist, viewGroup, false);
-                AllAgentList.PostsViewHolder viewHolder = new AllAgentList.PostsViewHolder(view);
+            public AllPostActivity.PostsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_posts_layout, viewGroup, false);
+                AllPostActivity.PostsViewHolder viewHolder = new AllPostActivity.PostsViewHolder(view);
 
                 return viewHolder;
             }
         };
-        agentList.setAdapter(adapter);
+
+        postList.setAdapter(adapter);
         adapter.startListening();
     }
 
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         TextView productname, productprice, productdate;
-        ImageView productimage;
+        CircleImageView productimage;
 
         public PostsViewHolder(View itemView) {
             super(itemView);
 
-            productname = itemView.findViewById(R.id.agentname);
-/*            productprice = itemView.findViewById(R.id.post_product_price);
-            productdate = itemView.findViewById(R.id.post_product_date);*/
-            productimage = itemView.findViewById(R.id.agentprofile);
+            productname = itemView.findViewById(R.id.post_product_name);
+            productprice = itemView.findViewById(R.id.post_product_price);
+            productdate = itemView.findViewById(R.id.post_product_date);
+            productimage = itemView.findViewById(R.id.post_product_image);
         }
     }
 }

@@ -1,6 +1,5 @@
-package com.uyr.yusara.dreamhome;
+package com.uyr.yusara.dreamhome.Menu;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.uyr.yusara.dreamhome.Modal.User;
+import com.uyr.yusara.dreamhome.R;
 
 public class Register2 extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,7 +57,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         String password = editTextPassword.getText().toString().trim();
         final String phone = editTextPhone.getText().toString().trim();
         final String role = "agent";
-        final String profileimages2 = "0";
+        final String profileimages2 = "https://firebasestorage.googleapis.com/v0/b/dreamhome-a806d.appspot.com/o/profile%20Images%2Fnophoto.png?alt=media&token=724e2036-5419-4eef-bbeb-d8b0083ea123";
+        final String profiledescription = "";
 
         if (name.isEmpty()) {
             editTextName.setError(getString(R.string.input_error_name));
@@ -116,7 +117,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
                                     email,
                                     phone,
                                     role,
-                                    profileimages2
+                                    profileimages2,
+                                    profiledescription
 
                             );
 

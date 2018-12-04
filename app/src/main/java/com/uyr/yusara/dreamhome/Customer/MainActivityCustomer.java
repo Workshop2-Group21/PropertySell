@@ -1,4 +1,4 @@
-package com.uyr.yusara.dreamhome;
+package com.uyr.yusara.dreamhome.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -25,15 +24,22 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Agent.AllAgentList;
-import com.uyr.yusara.dreamhome.Agent.AllPostActivityAgent;
+import com.uyr.yusara.dreamhome.AllPostActivity;
+import com.uyr.yusara.dreamhome.FindHouseActivity;
 import com.uyr.yusara.dreamhome.Menu.Login;
+import com.uyr.yusara.dreamhome.MainActivity;
+import com.uyr.yusara.dreamhome.MapsActivity;
 import com.uyr.yusara.dreamhome.News.NewsMainActivity;
+import com.uyr.yusara.dreamhome.PostActivity;
+import com.uyr.yusara.dreamhome.Profile;
+import com.uyr.yusara.dreamhome.R;
 
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivityCustomer extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView userEmail;
     FirebaseUser firebaseUser;
@@ -47,26 +53,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ViewFlipper flipper2;
 
-    private ImageButton img1, img2, img3, img4, img5, img6;
-    private TextView Bungalow, Single, Triple, halfstorey, semi,others;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_customer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
 
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
@@ -85,20 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View navView = navigationView.getHeaderView(0);
         NavProfileImage = (CircleImageView)navView.findViewById(R.id.nav_image);
 
-        img1 = (ImageButton) findViewById(R.id.img1);
-        img2 = (ImageButton) findViewById(R.id.img2);
-        img3 = (ImageButton) findViewById(R.id.img3);
-        img4 = (ImageButton) findViewById(R.id.img4);
-        img5 = (ImageButton) findViewById(R.id.img5);
-        img6 = (ImageButton) findViewById(R.id.img6);
-
-        Bungalow = (TextView) findViewById(R.id.bungtext);
-        Single = (TextView) findViewById(R.id.singletext);
-        Triple = (TextView) findViewById(R.id.tripletext);
-        halfstorey = (TextView) findViewById(R.id.halfstoreytext);
-        semi = (TextView)findViewById(R.id.semitexr);
-        others = (TextView)findViewById(R.id.otherstext);
-
         navigationView.setNavigationItemSelectedListener(this);
 
         UsersRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -111,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String image = documentSnapshot.getString("profileimage2");
 
                     //Picasso.get().load(image).placeholder(R.drawable.cc).into(NavProfileImage);
-                    Glide.with(MainActivity.this).load(image).into(NavProfileImage);
+                    Glide.with(MainActivityCustomer.this).load(image).into(NavProfileImage);
                 }
 
             }
@@ -126,13 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             flipperImages(images[i]);
         }
-
-        img1.setOnClickListener(this);
-        img2.setOnClickListener(this);
-        img3.setOnClickListener(this);
-        img4.setOnClickListener(this);
-        img5.setOnClickListener(this);
-        img6.setOnClickListener(this);
 
     }
 
@@ -169,23 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userEmail.setText(firebaseUser.getEmail());
 
-/*        UsersRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-                if(documentSnapshot.exists())
-                {
-                    String image = documentSnapshot.getString("profileimage2");
-
-                    //Picasso.get().load(image).placeholder(R.drawable.cc).into(NavProfileImage);
-                    //Glide.with(MainActivity.this).load(image).into(NavProfileImage);
-                }
-
-            }
-        });*/
-
-
-
         return true;
     }
 
@@ -196,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-/*        if (id == R.id.action_settings) {
+/*        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
             return true;
         }*/
 
@@ -212,54 +167,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+            Intent homeIntent = new Intent(MainActivityCustomer.this, MainActivity.class);
             startActivity(homeIntent);
             finish();
 
         } else if (id == R.id.nav_profile) {
 
-            Intent profile = new Intent(MainActivity.this, Profile.class);
+            Intent profile = new Intent(MainActivityCustomer.this, Profile.class);
             startActivity(profile);
-
-        } else if (id == R.id.nav_sell) {
-
-            Intent sell = new Intent(MainActivity.this, PostActivity.class);
-            startActivity(sell);
 
         } else if (id == R.id.nav_onsell) {
 
-            Intent onsell = new Intent(MainActivity.this, AllPostActivity.class);
+            Intent onsell = new Intent(MainActivityCustomer.this, AllPostActivity.class);
             startActivity(onsell);
 
         }else if (id == R.id.nav_find) {
 
-            Intent allpost = new Intent(MainActivity.this, FindHouseActivity .class);
+            Intent allpost = new Intent(MainActivityCustomer.this, FindHouseActivity.class);
             startActivity(allpost);
 
-        } else if (id == R.id.nav_mysellitem) {
+        } else if (id == R.id.nav_fav) {
 
-            Intent find = new Intent(MainActivity.this,  AllPostActivityAgent.class);
-            startActivity(find);
-
-        }else if (id == R.id.nav_fav) {
-
-            Intent post = new Intent(MainActivity.this, PostActivity.class);
+            Intent post = new Intent(MainActivityCustomer.this, PostActivity.class);
             startActivity(post);
 
         } else if (id == R.id.nav_news) {
 
-            Intent news = new Intent(MainActivity.this, NewsMainActivity.class);
+            Intent news = new Intent(MainActivityCustomer.this, NewsMainActivity.class);
             startActivity(news);
 
-        } else if (id == R.id.nav_share) {
-            Intent post = new Intent(MainActivity.this, AllAgentList.class);
+        }else if (id == R.id.nav_share) {
+            Intent post = new Intent(MainActivityCustomer.this, AllAgentList.class);
             startActivity(post);
 
 
         } else if (id == R.id.nav_about) {
 
-            Intent news = new Intent(MainActivity.this, NewsMainActivity.class);
-            startActivity(news);
+            Intent googlemap = new Intent(MainActivityCustomer.this, MapsActivity.class);
+            startActivity(googlemap);
 
 
         } else if (id == R.id.nav_logout) {
@@ -273,42 +218,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        switch (v.getId()) {
-            case R.id.img1:
-                Intent allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", Bungalow.getText().toString());
-                startActivity(allpost2);
-                break;
-            case R.id.img2:
-                allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", Single.getText().toString());
-                startActivity(allpost2);
-                break;
-            case R.id.img3:
-                allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", Triple.getText().toString());
-                startActivity(allpost2);
-                break;
-            case R.id.img4:
-                allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", halfstorey.getText().toString());
-                startActivity(allpost2);
-                break;
-            case R.id.img5:
-                allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", semi.getText().toString());
-                startActivity(allpost2);
-                break;
-            case R.id.img6:
-                allpost2 = new Intent(MainActivity.this, AllPostActivity2.class);
-                allpost2.putExtra("PostBungalow", others.getText().toString());
-                startActivity(allpost2);
-                break;
-        }
     }
 }

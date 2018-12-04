@@ -45,6 +45,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextEmail;
     private EditText editTextName;
     private EditText editTextphone;
+    private EditText editTextdescription;
 
     // Code gambar
     private CircleImageView ProfileImage;
@@ -74,11 +75,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         SettinguserRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
 
 
-        profiletitlename = (TextView) findViewById(R.id.profiletitlename);
+        //profiletitlename = (TextView) findViewById(R.id.profiletitlename);
 
         editTextEmail    = findViewById(R.id.edittext_email);
         editTextName   = findViewById(R.id.edittext_fullname);
         editTextphone    = findViewById(R.id.edittext_phone);
+        editTextdescription = findViewById(R.id.editTextdescription);
 
         findViewById(R.id.button_update).setOnClickListener(this);
         findViewById(R.id.profile_image).setOnClickListener(this);
@@ -95,11 +97,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         String myProfileemail = document.getString("email");
                         String myProfilename = document.getString("name");
                         String myProfilephone = document.getString("phone");
+                        String myProfiledescription = document.getString("profiledescription");
 
                         editTextEmail.setText(myProfileemail);
                         editTextName.setText(myProfilename);
                         editTextphone.setText(myProfilephone);
-                        profiletitlename.setText(myprofilenametitle);
+                        editTextdescription.setText(myProfiledescription);
+                        //profiletitlename.setText(myprofilenametitle);
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -152,6 +156,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         String email = editTextEmail.getText().toString();
         String name = editTextName.getText().toString();
         String phone = editTextphone.getText().toString();
+        String description = editTextdescription.getText().toString();
 
         if(TextUtils.isEmpty(email))
         {
@@ -167,17 +172,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         }
         else
             {
-                UpdateProfileInfo(email,name,phone);
+                UpdateProfileInfo(email,name,phone,description);
             }
 
     }
 
-    private void UpdateProfileInfo(String email, String name, String phone)
+    private void UpdateProfileInfo(String email, String name, String phone, String description)
     {
         HashMap userMap = new HashMap();
         userMap.put("email", email);
         userMap.put("name", name);
         userMap.put("phone", phone);
+        userMap.put("profiledescription", description);
         SettinguserRef.update(userMap).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
@@ -185,6 +191,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 {
                     SendUserToMainActivity();
                     Toast.makeText(Profile.this, "Account update successfully ", Toast.LENGTH_SHORT).show();
+                    SendUserToMainActivity();
                 }
                 else
                     {

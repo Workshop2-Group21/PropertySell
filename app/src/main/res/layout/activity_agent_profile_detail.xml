@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgentProfileDetailActivity">
+    tools:context=".Agent.AgentProfileDetailActivity">
 
     <include
         android:id="@+id/find_toolbar"
@@ -24,15 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/transparent"></android.support.v7.widget.Toolbar>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Agent Profile"
-            android:textAlignment="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryDark" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/agentprofileimage"
@@ -75,22 +66,12 @@
             android:padding="10dp" />
 
         <Button
-            android:id="@+id/button_approve"
+            android:id="@+id/button_sales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:background="@color/greennew"
-            android:text=" Approve "
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/button_remove"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:background="@color/rednew"
-            android:text=" Remove "
+            android:text="Unit for Sale"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
