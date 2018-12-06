@@ -8,8 +8,11 @@
     tools:context=".FindHouseActivity">
 
     <include
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:id="@+id/find_toolbar"
-        layout="@layout/app_bar_layout">
+        layout="@layout/app_bar_layout"
+        >
 
     </include>
 

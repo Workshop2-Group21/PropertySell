@@ -82,7 +82,8 @@
         <activity android:name=".AllPostActivity2" />
         <activity android:name=".Agent.AllAgentListFromProfile" />
         <activity android:name=".News.NewsMainActivity" />
-        <activity android:name=".News.DetailsActivity"></activity>
+        <activity android:name=".News.DetailsActivity" />
+        <activity android:name=".LoadCalculator"></activity>
     </application>
 
 </manifest>

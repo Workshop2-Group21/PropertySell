@@ -13,15 +13,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.R;
 
@@ -86,7 +90,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
         final String roles = "0";
 
         if (email.isEmpty()) {
@@ -123,27 +127,60 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
 
-                if (task.isSuccessful() && roles=="0") {
-
-
-
-                    finish();
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                if (!task.isSuccessful())
+                {
+                    if (password.length() < 6)
+                    {
+                        editTextPassword.setError(getString(R.string.minimum_password));
+                    }
+                    else
+                    {
+                        Toast.makeText(Login.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                    }
                 }
-                if (task.isSuccessful() && roles=="1") {
-                    finish();
-                    Intent intent = new Intent(Login.this, Login.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
-                else {
-                    //Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                else
+                {
+                    DetermineRole();
+                    Toast.makeText(Login.this, "Welcome", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
+    private void DetermineRole(){
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        //final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("agent")){
+                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("customer")) {
+                        Intent intent = new Intent(Login.this, MainActivityCustomer.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(Login.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+
 
 /*
     @Override

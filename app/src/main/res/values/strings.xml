@@ -7,6 +7,8 @@
     <string name="register">Register</string>
     <string name="input_error_name">name required</string>
     <string name="input_error_email">email required</string>
+    <string name="minimum_password">Enter at least 6 characters!</string>
+    <string name="auth_failed">Authentication failed</string>
     <string name="input_error_password">password required</string>
     <string name="input_error_phone">phone required</string>
     <string name="input_error_password_length">password should be atleast 6 characters long</string>

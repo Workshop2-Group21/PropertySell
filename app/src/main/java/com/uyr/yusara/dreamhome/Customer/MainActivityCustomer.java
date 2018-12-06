@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Agent.AllAgentList;
 import com.uyr.yusara.dreamhome.AllPostActivity;
 import com.uyr.yusara.dreamhome.FindHouseActivity;
+import com.uyr.yusara.dreamhome.LoadCalculator;
 import com.uyr.yusara.dreamhome.Menu.Login;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.MapsActivity;
@@ -191,7 +192,13 @@ public class MainActivityCustomer extends AppCompatActivity
             Intent post = new Intent(MainActivityCustomer.this, PostActivity.class);
             startActivity(post);
 
-        } else if (id == R.id.nav_news) {
+        }else if (id == R.id.nav_calculator) {
+
+            Intent post = new Intent(MainActivityCustomer.this, LoadCalculator.class);
+            startActivity(post);
+
+        }
+        else if (id == R.id.nav_news) {
 
             Intent news = new Intent(MainActivityCustomer.this, NewsMainActivity.class);
             startActivity(news);
