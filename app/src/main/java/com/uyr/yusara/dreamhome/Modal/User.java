@@ -34,14 +34,13 @@ public class User {
         this.devicetoken = devicetoken;
     }
 
-    public String getProfileimage() {
+    public String getProfileimage2() {
         return profileimage2;
     }
 
-    public void setProfileimage(String profileimage2) {
+    public void setProfileimage2(String profileimage2) {
         this.profileimage2 = profileimage2;
     }
-
 
     public String getName() {
         return name;

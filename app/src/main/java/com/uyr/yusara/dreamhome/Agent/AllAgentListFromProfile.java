@@ -67,14 +67,14 @@ public class AllAgentListFromProfile extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Agent House On Sales");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         Bundle extras = getIntent().getExtras();
         AgentName = (String) extras.get("PassAgentName");
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
@@ -92,13 +92,13 @@ public class AllAgentListFromProfile extends AppCompatActivity {
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
         finish();
-    }
+    }*/
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        Query SortPostsInDecendingOrder = Postsref.orderBy("name").startAt(AgentName).endAt(AgentName + "\uf8ff");
+        Query SortPostsInDecendingOrder = Postsref.orderBy("name", Query.Direction.DESCENDING).startAt(AgentName).endAt(AgentName + "\uf8ff");
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()

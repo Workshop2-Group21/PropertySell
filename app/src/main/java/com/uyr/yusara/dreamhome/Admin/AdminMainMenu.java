@@ -1,7 +1,10 @@
-package com.uyr.yusara.dreamhome.Customer;
+package com.uyr.yusara.dreamhome.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,9 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,23 +28,21 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Agent.AllAgentList;
-import com.uyr.yusara.dreamhome.AllPostActivity;
-import com.uyr.yusara.dreamhome.FindHouseActivity;
-import com.uyr.yusara.dreamhome.LoadCalculator;
-import com.uyr.yusara.dreamhome.Menu.Login;
+import com.uyr.yusara.dreamhome.ClickPostActivity;
+import com.uyr.yusara.dreamhome.CommentActivity;
+import com.uyr.yusara.dreamhome.Customer.AllCustomerList;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.MainActivity;
-import com.uyr.yusara.dreamhome.MapsActivity;
+import com.uyr.yusara.dreamhome.Menu.Login;
 import com.uyr.yusara.dreamhome.News.NewsMainActivity;
-import com.uyr.yusara.dreamhome.PostActivity;
-import com.uyr.yusara.dreamhome.Profile;
 import com.uyr.yusara.dreamhome.R;
 
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivityCustomer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class AdminMainMenu extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView userEmail;
     FirebaseUser firebaseUser;
@@ -52,15 +54,17 @@ public class MainActivityCustomer extends AppCompatActivity
 
     private CircleImageView NavProfileImage;
 
-    ViewFlipper flipper2;
+    private CardView bankcardId,bankcardId2, bankcardId1, bankcardId3,bankcardId5;
+    private LinearLayout L1;
+    private Animation left, right;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_customer);
+        setContentView(R.layout.activity_admin_main_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         mAuth = FirebaseAuth.getInstance();
         currentUserid = mAuth.getCurrentUser().getUid();
@@ -72,10 +76,8 @@ public class MainActivityCustomer extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        //View navView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         View navView = navigationView.getHeaderView(0);
         NavProfileImage = (CircleImageView)navView.findViewById(R.id.nav_image);
 
@@ -91,37 +93,30 @@ public class MainActivityCustomer extends AppCompatActivity
                     String image = documentSnapshot.getString("profileimage2");
 
                     //Picasso.get().load(image).placeholder(R.drawable.cc).into(NavProfileImage);
-                    Glide.with(MainActivityCustomer.this).load(image).into(NavProfileImage);
+                    Glide.with(AdminMainMenu.this).load(image).into(NavProfileImage);
                 }
 
             }
         });
 
+        bankcardId = findViewById(R.id.bankcardId);
+        bankcardId1 = findViewById(R.id.bankcardId1);
+        bankcardId2 = findViewById(R.id.bankcardId2);
+        bankcardId3 = findViewById(R.id.bankcardId3);
+        bankcardId5 = findViewById(R.id.bankcardId5);
 
-        int images[] = {R.drawable.promo1,R.drawable.promo2,R.drawable.promo3};
 
-        flipper2 = findViewById(R.id.flipper2);
+        findViewById(R.id.bankcardId).setOnClickListener(this);
+        findViewById(R.id.bankcardId1).setOnClickListener(this);
+        findViewById(R.id.bankcardId2).setOnClickListener(this);
+        findViewById(R.id.bankcardId3).setOnClickListener(this);
+        findViewById(R.id.bankcardId5).setOnClickListener(this);
 
-        for (int i = 0; i < images.length; i++)
-        {
-            flipperImages(images[i]);
-        }
 
+        L1 = findViewById(R.id.L1);
+        left = AnimationUtils.loadAnimation(this, R.anim.lefttoright);
+        L1.setAnimation(left);
     }
-
-    public void flipperImages(int image)
-    {
-        ImageView imageView = new ImageView(this);
-        imageView.setBackgroundResource(image);
-
-        flipper2.addView(imageView);
-        flipper2.setFlipInterval(4000);
-        flipper2.setAutoStart(true);
-
-        flipper2.setInAnimation(this, android.R.anim.slide_in_left);
-        flipper2.setOutAnimation(this, android.R.anim.slide_in_left);
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -135,13 +130,10 @@ public class MainActivityCustomer extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
 
         userEmail = findViewById(R.id.txtemail);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userEmail.setText(firebaseUser.getEmail());
-
         return true;
     }
 
@@ -150,13 +142,6 @@ public class MainActivityCustomer extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-/*        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -168,50 +153,18 @@ public class MainActivityCustomer extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            Intent homeIntent = new Intent(MainActivityCustomer.this, MainActivityCustomer.class);
+
+            Intent homeIntent = new Intent(AdminMainMenu.this, AdminMainMenu.class);
             startActivity(homeIntent);
             finish();
 
-        } else if (id == R.id.nav_profile) {
-
-            Intent profile = new Intent(MainActivityCustomer.this, Profile.class);
-            startActivity(profile);
-
-        } else if (id == R.id.nav_onsell) {
-
-            Intent onsell = new Intent(MainActivityCustomer.this, AllPostActivity.class);
-            startActivity(onsell);
-
-        }else if (id == R.id.nav_find) {
-
-            Intent allpost = new Intent(MainActivityCustomer.this, FindHouseActivity.class);
-            startActivity(allpost);
-
-        } else if (id == R.id.nav_fav) {
-
-            Intent post = new Intent(MainActivityCustomer.this, PostActivity.class);
-            startActivity(post);
-
-        }else if (id == R.id.nav_calculator) {
-
-            Intent post = new Intent(MainActivityCustomer.this, LoadCalculator.class);
-            startActivity(post);
-
-        }
-        else if (id == R.id.nav_news) {
-
-            Intent news = new Intent(MainActivityCustomer.this, NewsMainActivity.class);
-            startActivity(news);
-
-        }else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_find) {
 
 
+
+        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {
-
-            Intent googlemap = new Intent(MainActivityCustomer.this, MapsActivity.class);
-            startActivity(googlemap);
-
 
         } else if (id == R.id.nav_logout) {
 
@@ -224,5 +177,31 @@ public class MainActivityCustomer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.bankcardId:
+                Intent post = new Intent(AdminMainMenu.this, AllAgentList.class);
+                startActivity(post);
+                break;
+            case R.id.bankcardId2:
+                Intent news = new Intent(AdminMainMenu.this, NewsMainActivity.class);
+                startActivity(news);
+                break;
+            case R.id.bankcardId1:
+                Intent customer = new Intent(AdminMainMenu.this, AllCustomerList.class);
+                startActivity(customer);
+                break;
+            case R.id.bankcardId3:
+                Intent houses = new Intent(AdminMainMenu.this, AllPostPending.class);
+                startActivity(houses);
+                break;
+            case R.id.bankcardId5:
+                Intent report = new Intent(AdminMainMenu.this, AdminGraph.class);
+                startActivity(report);
+        }
     }
 }

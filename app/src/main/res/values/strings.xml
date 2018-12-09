@@ -44,5 +44,6 @@
         <item>More than 6</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_main_customer">MainActivityCustomer</string>
+    <string name="title_activity_main_customer">DreamHome.com.my</string>
+    <string name="title_activity_admin_main_menu">Admin Menu</string>
 </resources>

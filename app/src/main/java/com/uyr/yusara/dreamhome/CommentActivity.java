@@ -127,7 +127,7 @@ public class CommentActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Query SortPostsInDecendingOrder = Postsref.orderBy("counter");
+        Query SortPostsInDecendingOrder = Postsref.orderBy("counter",Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Comments> options = new FirestoreRecyclerOptions.Builder<Comments>()
                 .setQuery(SortPostsInDecendingOrder,Comments.class)

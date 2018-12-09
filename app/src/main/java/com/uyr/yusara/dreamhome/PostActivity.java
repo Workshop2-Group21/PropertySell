@@ -558,6 +558,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         postMap.put("name", name);
                         postMap.put("counter", countPosts);
                         postMap.put("profileimage2", userprofile);
+                        postMap.put("status","pending");
 
                         Toast.makeText(PostActivity.this, "Masuk Saving Post info ", Toast.LENGTH_SHORT).show();
 

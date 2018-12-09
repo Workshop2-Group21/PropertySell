@@ -59,12 +59,12 @@ public class NewsMainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.news_details);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("DreamHome News");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
@@ -73,7 +73,7 @@ public class NewsMainActivity extends AppCompatActivity {
             SendUserToMainActivity();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     private void SendUserToMainActivity()
     {

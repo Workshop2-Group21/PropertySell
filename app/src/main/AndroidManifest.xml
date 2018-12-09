@@ -83,7 +83,15 @@
         <activity android:name=".Agent.AllAgentListFromProfile" />
         <activity android:name=".News.NewsMainActivity" />
         <activity android:name=".News.DetailsActivity" />
-        <activity android:name=".LoadCalculator"></activity>
+        <activity android:name=".LoadCalculator" />
+        <activity
+            android:name=".Admin.AdminMainMenu"
+            android:label="@string/title_activity_admin_main_menu"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Customer.AllCustomerList" />
+        <activity android:name=".Admin.AllPostPending" />
+        <activity android:name=".Admin.AdminGraph" />
+        <activity android:name=".Customer.CustomerProfileDetailActivity"></activity>
     </application>
 
 </manifest>

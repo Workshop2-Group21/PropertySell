@@ -16,14 +16,20 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.AllPostActivity2;
 import com.uyr.yusara.dreamhome.R;
 
 import javax.annotation.Nullable;
@@ -35,6 +41,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
     private TextView agent_email;
     private TextView agent_fullname;
     private TextView agent_phone;
+    private TextView agent_description;
 
     // Code gambar
     private CircleImageView ProfileImage;
@@ -43,6 +50,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
     private DocumentReference ClickPostRef;
     private DocumentReference RoleRef;
+    private CollectionReference CountRef;
     private CollectionReference Postsref;
     private FirebaseAuth mAuth;
 
@@ -52,7 +60,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
     private String PostKey, CURRENT_STATE, agent;
 
-    private Button unitsale,RemoveAgentBtn;
+    private Button unitsale,removeagent;
 
     private String AgentName;
 
@@ -73,13 +81,16 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
         PostKey = getIntent().getExtras().get("PostKey").toString();
         ClickPostRef = FirebaseFirestore.getInstance().collection("Users").document(PostKey);
         RoleRef = FirebaseFirestore.getInstance().collection("Users").document(PostKey);
+        CountRef = FirebaseFirestore.getInstance().collection("Posts");
 
 
         unitsale = findViewById(R.id.button_sales);
+        removeagent = findViewById(R.id.button_delete);
 
         IntializeFields();
 
         findViewById(R.id.button_sales).setOnClickListener(this);
+        findViewById(R.id.button_delete).setOnClickListener(this);
 
 
         mToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.find_toolbar);
@@ -98,10 +109,12 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
                 String email = documentSnapshot.getString("email");
                 String fullname = documentSnapshot.getString("name");
                 String phone = documentSnapshot.getString("phone");
+                String profiledescription = documentSnapshot.getString("profiledescription");
 
                 agent_email.setText(email);
                 agent_fullname.setText(fullname);
                 agent_phone.setText(phone);
+                agent_description.setText(profiledescription);
 
 /*                Postsref = FirebaseFirestore.getInstance().collection("Posts").document().collection(PostKey);
 
@@ -145,8 +158,6 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
         });
 
 
-
-
         RoleRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -168,7 +179,41 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
             }
         });
 
+        CountAgent();
+    }
 
+    private void CountAgent()
+    {
+        CountRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful())
+                {
+                    QuerySnapshot document = task.getResult();
+                    if (document != null)
+                    {
+                        countPosts = document.size();
+                        //unitsale.setText(" Unit On Sales: " + Integer.toString(countPosts));
+                        Toast.makeText(AgentProfileDetailActivity.this, "Size is " + countPosts, Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        countPosts = 0;
+                    }
+                }
+            }
+        });
+
+/*        CountRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
+            {
+                for(QuerySnapshot ds: queryDocumentSnapshots.getDocuments().size())
+
+            }
+        });*/
     }
 
 
@@ -177,6 +222,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
         agent_email    = findViewById(R.id.agent_email);
         agent_fullname   = findViewById(R.id.agent_fullname);
         agent_phone    = findViewById(R.id.agent_phone);
+        agent_description = findViewById(R.id.agent_description);
 
         CURRENT_STATE = "not_agents";
 
@@ -212,7 +258,15 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //deleteProduct();
+
+                        ClickPostRef = FirebaseFirestore.getInstance().collection("Users").document(PostKey);
+                        ClickPostRef.delete();
+
+                        Toast.makeText(AgentProfileDetailActivity.this, "Account has been deactivated", Toast.LENGTH_SHORT).show();
+
+                        finish();
+                        Intent deleteaccount = new Intent(AgentProfileDetailActivity.this, AdminMainMenu.class);
+                        startActivity(deleteaccount);
                     }
                 });
 
@@ -226,7 +280,6 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
                 ad.show();
                 break;
         }
-
     }
 
 

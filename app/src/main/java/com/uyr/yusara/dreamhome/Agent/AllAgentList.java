@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +18,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.uyr.yusara.dreamhome.AllPostActivity;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.Modal.User;
 import com.uyr.yusara.dreamhome.R;
@@ -61,11 +68,14 @@ public class AllAgentList extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Agent Lists");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
+
+
 
     }
 
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -75,6 +85,7 @@ public class AllAgentList extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+*/
 
     private void SendUserToMainActivity() {
         Intent mainIntent = new Intent(AllAgentList.this, MainActivity.class);
@@ -87,7 +98,7 @@ public class AllAgentList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //Query SortPostsInDecendingOrder = Postsref.orderBy("counter");
+        Query agentlist = Agentsref.orderBy("role").startAt("Agent").endAt("Agent" + "\uf8ff");
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
@@ -95,19 +106,19 @@ public class AllAgentList extends AppCompatActivity {
                 .build();*/
 
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
-                .setQuery(Agentsref, User.class)
+                .setQuery(agentlist, User.class)
                 .build();
 
         FirestoreRecyclerAdapter<User, AllAgentList.PostsViewHolder> adapter = new FirestoreRecyclerAdapter<User, AllAgentList.PostsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull AllAgentList.PostsViewHolder holder, final int position, @NonNull User model) {
 
-                Glide.with(AllAgentList.this).load(model.getProfileimage()).into(holder.productimage2);
+                //Glide.with(AllAgentList.this).load(model.getProfileimage()).into(holder.agentimage);
 
                 holder.productname.setText(model.getName());
-                //Glide.with(AllAgentList.this).load(model.getProfileimage()).into(holder.productimage2);
-/*                holder.productprice.setText("RM " + model.getPrice());
-                holder.productdate.setText(model.getDate());*/
+                holder.agentphonenum.setText(model.getPhone());
+
+                Glide.with(AllAgentList.this).load(model.getProfileimage2()).into(holder.agentimage);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -141,8 +152,8 @@ public class AllAgentList extends AppCompatActivity {
 
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
-        TextView productname, productprice, productdate;
-        ImageView productimage2;
+        public ImageView agentimage;
+        TextView productname, agentphonenum, productdate;
 
         public PostsViewHolder(View itemView) {
             super(itemView);
@@ -150,7 +161,9 @@ public class AllAgentList extends AppCompatActivity {
             productname = itemView.findViewById(R.id.agentname);
 /*            productprice = itemView.findViewById(R.id.post_product_price);
             productdate = itemView.findViewById(R.id.post_product_date);*/
-            productimage2 = itemView.findViewById(R.id.agentimage);
+            agentphonenum = itemView.findViewById(R.id.agentphone);
+            agentimage = itemView.findViewById(R.id.agentimage);
+
         }
     }
 }

@@ -109,7 +109,9 @@ public class AllPostActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Query SortPostsInDecendingOrder = Postsref.orderBy("counter");
+        //Query SortPostsInDecendingOrder = Postsref.orderBy("counter",Query.Direction.DESCENDING);
+
+        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("approve").endAt("approve" + "\uf8ff") ;
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
