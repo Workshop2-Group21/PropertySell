@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,6 +44,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -142,10 +145,43 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     private void SendUserToMainActivity()
     {
-        Intent mainIntent = new Intent(PostActivity.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+                        Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Customer")) {
+                        Intent intent = new Intent(PostActivity.this, MainActivityCustomer.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(PostActivity.this, AdminMainMenu.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(PostActivity.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -558,9 +594,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                         postMap.put("name", name);
                         postMap.put("counter", countPosts);
                         postMap.put("profileimage2", userprofile);
-                        postMap.put("status","pending");
-
-                        Toast.makeText(PostActivity.this, "Masuk Saving Post info ", Toast.LENGTH_SHORT).show();
+                        postMap.put("status","Pending");
 
 
                         Postsref.add(postMap).addOnCompleteListener(new OnCompleteListener() {
@@ -570,10 +604,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                                 {
                                     Toast.makeText(PostActivity.this, "Post update successfully ", Toast.LENGTH_SHORT).show();
 
-
                                     HashMap postnotification = new HashMap();
                                     postnotification.put("from",currentUserid);
                                     postnotification.put("type","new post noti");
+                                    SendUserToMainActivity();
 
                                     NotisRef.document().set(postnotification).addOnCompleteListener(new OnCompleteListener() {
                                         @Override

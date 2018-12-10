@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
 import com.uyr.yusara.dreamhome.Agent.AgentProfileDetailActivity;
+import com.uyr.yusara.dreamhome.Agent.AllAgentList;
 import com.uyr.yusara.dreamhome.Agent.AllAgentListFromProfile;
 import com.uyr.yusara.dreamhome.R;
 
@@ -90,11 +91,11 @@ public class CustomerProfileDetailActivity extends AppCompatActivity implements 
 
         mToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(" Agent Profile ");
+        getSupportActionBar().setTitle(" Customer Profile ");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
 
 
         ClickPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -139,9 +140,16 @@ public class CustomerProfileDetailActivity extends AppCompatActivity implements 
 
         if(id == android.R.id.home)
         {
-            //SendUserToMainActivity();
+            SendUserToMainActivity();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void SendUserToMainActivity() {
+
+        Intent intent = new Intent(CustomerProfileDetailActivity.this, AllCustomerList.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

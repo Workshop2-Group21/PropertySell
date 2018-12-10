@@ -16,17 +16,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.Modal.Posts;
 
 public class AllPostActivity extends AppCompatActivity {
@@ -68,9 +75,48 @@ public class AllPostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-
         AddNewPostButton = (ImageButton)findViewById(R.id.btnPost);
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+                    }
+                    else if (role.equals("Customer")) {
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+                    }
+                    else if (role.equals("Admin")) {
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+
+                    } else {
+                        Toast.makeText(AllPostActivity.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+
+
 
         AddNewPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +128,8 @@ public class AllPostActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
 
     }
 
@@ -99,10 +147,43 @@ public class AllPostActivity extends AppCompatActivity {
 
     private void SendUserToMainActivity()
     {
-        Intent mainIntent = new Intent(AllPostActivity.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+                        Intent intent = new Intent(AllPostActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Customer")) {
+                        Intent intent = new Intent(AllPostActivity.this, MainActivityCustomer.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(AllPostActivity.this, AdminMainMenu.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(AllPostActivity.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -111,7 +192,7 @@ public class AllPostActivity extends AppCompatActivity {
 
         //Query SortPostsInDecendingOrder = Postsref.orderBy("counter",Query.Direction.DESCENDING);
 
-        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("approve").endAt("approve" + "\uf8ff") ;
+        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("Approved").endAt("Approved" + "\uf8ff") ;
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()

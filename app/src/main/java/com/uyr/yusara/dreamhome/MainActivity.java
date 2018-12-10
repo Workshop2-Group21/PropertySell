@@ -1,5 +1,6 @@
 package com.uyr.yusara.dreamhome;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -258,9 +262,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_about) {
 
-            Intent news = new Intent(MainActivity.this, NewsMainActivity.class);
-            startActivity(news);
-
+            MyCustomAlertDialog();
 
         } else if (id == R.id.nav_logout) {
 
@@ -273,6 +275,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void MyCustomAlertDialog(){
+        final Dialog MyDialog = new Dialog(MainActivity.this);
+        MyDialog.requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        MyDialog.setContentView(R.layout.about_dialog);
+        MyDialog.setTitle("My Custom Dialog");
+
+        /*hello = (Button)MyDialog.findViewById(R.id.hello);*/
+        Button close = (Button)MyDialog.findViewById(R.id.closebtn);
+
+        close.setEnabled(true);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDialog.cancel();
+            }
+        });
+
+        MyDialog.show();
     }
 
     @Override

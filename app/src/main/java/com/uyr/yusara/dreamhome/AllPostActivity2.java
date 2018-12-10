@@ -14,15 +14,22 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.Modal.Posts;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,6 +49,8 @@ public class AllPostActivity2 extends AppCompatActivity {
     private ImageButton AddNewPostButton;
 
     private String HouseType;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,44 @@ public class AllPostActivity2 extends AppCompatActivity {
 
         AddNewPostButton = (ImageButton) findViewById(R.id.btnPost);
 
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+                    }
+                    else if (role.equals("Customer")) {
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+                    }
+                    else if (role.equals("Admin")) {
+
+                        AddNewPostButton.setVisibility(View.GONE);
+
+
+                    } else {
+                        Toast.makeText(AllPostActivity2.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         AddNewPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,10 +145,43 @@ public class AllPostActivity2 extends AppCompatActivity {
     }
 
     private void SendUserToMainActivity() {
-        Intent mainIntent = new Intent(AllPostActivity2.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+                        Intent intent = new Intent(AllPostActivity2.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Customer")) {
+                        Intent intent = new Intent(AllPostActivity2.this, MainActivityCustomer.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(AllPostActivity2.this, AdminMainMenu.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(AllPostActivity2.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override

@@ -16,13 +16,14 @@ public class Posts
     public String firmtype;
     public String firmnumber;
     public String description2;
+    public String status;
 
     public Posts()
     {
 
     }
 
-    public Posts(String uid, String time, String date, String description, String postImage, String productname, String price, String propertytype, String bathroom, String bedrooms, String size, String firmtype, String firmnumber, String description2) {
+    public Posts(String uid, String time, String date, String description, String postImage, String productname, String price, String propertytype, String bathroom, String bedrooms, String size, String firmtype, String firmnumber, String description2,String status) {
         this.uid = uid;
         this.time = time;
         this.date = date;
@@ -37,6 +38,15 @@ public class Posts
         this.firmtype = firmtype;
         this.firmnumber = firmnumber;
         this.description2 = description2;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPrice() {

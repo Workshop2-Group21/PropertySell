@@ -166,6 +166,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Register2.this, getString(R.string.registration_success), Toast.LENGTH_LONG).show();
+                                        finish();
                                         SendUserToLoginActivity();
 
                                     } else {

@@ -603,7 +603,7 @@ public class AllPostPending extends AppCompatActivity {
     }
 
     private void pendingapprove() {
-        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("pending").endAt("pending" + "\uf8ff");
+        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("Pending").endAt("Pending" + "\uf8ff");
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()
@@ -657,7 +657,7 @@ public class AllPostPending extends AppCompatActivity {
                         PostsRef2 = FirebaseFirestore.getInstance().collection("Posts").document(PostKey);
 
                         HashMap userMap = new HashMap();
-                        userMap.put("status", "approve");
+                        userMap.put("status", "Approved");
                         PostsRef2.update(userMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
@@ -688,7 +688,7 @@ public class AllPostPending extends AppCompatActivity {
     }
 
     private void approved() {
-        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("approve").endAt("approve" + "\uf8ff");
+        Query SortPostsInDecendingOrder = Postsref.orderBy("status").startAt("Approved").endAt("Approved" + "\uf8ff");
 
 /*        //Untuk display semua post x tersusun
         FirestoreRecyclerOptions<Posts> options = new FirestoreRecyclerOptions.Builder<Posts>()

@@ -8,10 +8,10 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="Home" />
-        <item
+<!--        <item
             android:id="@+id/nav_find"
             android:icon="@drawable/search"
-            android:title="Find" />
+            android:title="Find" />-->
     </group>
 
     <item android:title="Communicate">
