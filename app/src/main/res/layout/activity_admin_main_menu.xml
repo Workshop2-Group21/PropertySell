@@ -9,8 +9,9 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_main_activity_customer"
-        />
+        layout="@layout/app_bar_admin_main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -18,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main_activity_customer"
-        app:menu="@menu/activity_main_customer_drawer" />
+        app:headerLayout="@layout/nav_header_admin_main_menu"
+        app:menu="@menu/activity_admin_main_menu_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -215,10 +215,10 @@
                 </LinearLayout>
 
                 <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/silver"
-                    />
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/silver"
+                />
 
                 <TextView
                     android:id="@+id/bedroomstitle"
@@ -520,6 +520,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_background"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textColorLink="@color/silver"
                     android:layout_gravity="center"
                     android:layout_marginBottom="17dp"
                     android:text="Post" />

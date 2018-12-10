@@ -100,7 +100,9 @@ public class FindHouseActivity extends AppCompatActivity {
     {
         Toast.makeText(this, "Searching ....", Toast.LENGTH_LONG).show();
 
-        Query searchHouseTypeQuery = allUserDatabaseRef.orderBy("description").startAt(searchBoxInput).endAt(searchBoxInput + "\uf8ff");
+        String query = searchBoxInput.toLowerCase();
+
+        Query searchHouseTypeQuery = allUserDatabaseRef.orderBy("description").startAt(query).endAt(query + "\uf8ff");
 
         FirestoreRecyclerOptions<FIndHouseType> options = new FirestoreRecyclerOptions.Builder<FIndHouseType>()
                 .setQuery(searchHouseTypeQuery,FIndHouseType.class)
@@ -116,7 +118,7 @@ public class FindHouseActivity extends AppCompatActivity {
                 holder.setDescription(model.getDescription());
                 holder.setProductprice(model.getPrice());
                 holder.setDate(model.getDate());
-                holder.setProfileImage2(getApplicationContext(), model.getProfileImage2());
+                holder.setPostImage(getApplicationContext(), model.getPostImage());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -170,7 +172,7 @@ public class FindHouseActivity extends AppCompatActivity {
 
         }
 
-        public void setProfileImage2(Context ctx, String profileImage2)
+        public void setPostImage(Context ctx, String profileImage2)
         {
             ImageView myImage = (ImageView) itemView.findViewById(R.id.post_product_image);
             Glide.with(ctx).load(profileImage2).into(myImage);

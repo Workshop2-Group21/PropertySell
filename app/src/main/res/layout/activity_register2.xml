@@ -20,7 +20,7 @@
             android:fontFamily="cursive"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textSize="@dimen/app_name_size" />
 
         <EditText
@@ -31,7 +31,7 @@
             android:drawablePadding="@dimen/drawable_padding"
             android:hint="@string/full_name"
             android:nextFocusDown="@id/edit_text_email"
-            android:textColor="@color/colorText"
+            android:textColor="@color/black"
             android:textColorHint="@color/colorHint" />
 
 
@@ -44,7 +44,7 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:nextFocusDown="@id/edit_text_password"
-            android:textColor="@color/colorText"
+            android:textColor="@color/black"
             android:textColorHint="@color/colorHint" />
 
 
@@ -57,7 +57,7 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:nextFocusDown="@id/edit_text_phone"
-            android:textColor="@color/colorText"
+            android:textColor="@color/black"
             android:textColorHint="@color/colorHint" />
 
         <EditText
@@ -71,8 +71,31 @@
             android:inputType="number"
             android:maxLength="10"
             android:nextFocusDown="@id/button_register"
-            android:textColor="@color/colorText"
+            android:textColor="@color/black"
             android:textColorHint="@color/colorHint" />
+
+        <RadioGroup
+            android:id="@+id/registerRoleRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:orientation="horizontal">>
+
+            <RadioButton
+                android:id="@+id/radioButton_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_weight="1"
+                android:text="Agent" />
+
+            <RadioButton
+                android:id="@+id/radioButton_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/button_register"
@@ -87,6 +110,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
 

@@ -175,7 +175,6 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
                         AlertDialog ad = builder.create();
                         ad.show();
-
                     }
                 });
 

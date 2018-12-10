@@ -20,11 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
 import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.R;
@@ -56,9 +54,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         if(mAuth.getCurrentUser() !=null)
         {
-            Intent intent = new Intent(Login.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            DetermineRole();
         }
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -163,15 +159,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     DocumentSnapshot doc = task.getResult();
                     role = doc.get("role").toString();
 
-                    if(role.equals("agent")){
+                    if(role.equals("Agent")){
                         Intent intent = new Intent(Login.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
-                    else if (role.equals("customer")) {
+                    else if (role.equals("Customer")) {
                         Intent intent = new Intent(Login.this, MainActivityCustomer.class);
                         startActivity(intent);
                         finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(Login.this, AdminMainMenu.class);
+                        startActivity(intent);
+                        finish();
+
                     } else {
                         Toast.makeText(Login.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
                     }

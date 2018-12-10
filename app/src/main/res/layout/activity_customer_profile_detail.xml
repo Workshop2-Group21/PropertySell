@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Agent.AgentProfileDetailActivity">
+    tools:context=".Customer.CustomerProfileDetailActivity">
 
     <include
         android:id="@+id/find_toolbar"
@@ -26,7 +26,7 @@
             android:background="@android:color/transparent"></android.support.v7.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/agentprofileimage"
+            android:id="@+id/customerprofileimage"
             android:layout_width="140dp"
             android:layout_height="130dp"
             android:layout_gravity="center"
@@ -36,7 +36,7 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/agent_email"
+            android:id="@+id/customer_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -46,7 +46,7 @@
             android:padding="10dp" />
 
         <TextView
-            android:id="@+id/agent_fullname"
+            android:id="@+id/customer_fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -56,7 +56,7 @@
             android:padding="10dp" />
 
         <TextView
-            android:id="@+id/agent_phone"
+            android:id="@+id/customer_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -65,24 +65,14 @@
             android:hint="Phone"
             android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/agent_description"
+        <TextView
+            android:id="@+id/customer_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
             android:ems="10"
             android:hint="Description"
             android:inputType="textMultiLine" />
-
-        <Button
-            android:id="@+id/button_sales"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@color/greennew"
-            android:text="Unit for Sale"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/button_delete"

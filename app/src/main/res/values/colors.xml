@@ -30,4 +30,10 @@
     <color name="starred">#df3409</color>
     <color name="endred">#e64d0b</color>
     <color name="pinkpeach">#ffaba0</color>
+    <color name="greenblue">#00bfa5</color>
+    <color name="purple1">#7c4dff</color>
+    <color name="yellow1">#ffb300</color>
+    <color name="pinky">#fe104d</color>
+    <color name="darkblue">#2980b9</color>
+    <color name="darkpurple">#a569bd</color>
 </resources>
