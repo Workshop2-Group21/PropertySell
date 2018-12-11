@@ -91,7 +91,8 @@
         <activity android:name=".Customer.AllCustomerList" />
         <activity android:name=".Admin.AllPostPending" />
         <activity android:name=".Admin.AdminGraph" />
-        <activity android:name=".Customer.CustomerProfileDetailActivity"></activity>
+        <activity android:name=".Customer.CustomerProfileDetailActivity" />
+        <activity android:name=".WishList.WishlistActivity"></activity>
     </application>
 
 </manifest>
