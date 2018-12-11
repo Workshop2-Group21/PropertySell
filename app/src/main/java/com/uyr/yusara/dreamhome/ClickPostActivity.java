@@ -38,6 +38,8 @@ import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
 import com.uyr.yusara.dreamhome.Admin.AllPostPending;
 import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 
+import java.util.HashMap;
+
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,13 +53,17 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
     //private CollectionReference ClickPostRef;
     private DocumentReference ClickPostRef;//,BookmarkPostRef;
     private DocumentReference ClickAgentRef;
-    private CollectionReference BookmarkPostRef;
+
+    private CollectionReference wishlistRef;
+    private DocumentReference wishlistRefdb;
+
     //private DatabaseReference BookmarkPostRef;
     private TextView Postpricetxt, Postpropertytypetxt, Postbathroomtxt, Postbedroomstxt, Postsizetxt, Postfirmtypetxt, Postfirmnumbertxt, PostDescription2txt,Postaddresstxt,Posttitletypetxt;
     private TextView Postuser_id;
     private TextView username,userphone,useremail;
     private CircleImageView profile_image;
-    private TextView locationaddress;
+    private TextView locationaddress,imageurl;
+
 
     //private DatabaseReference ClickPostRef2;
 
@@ -73,6 +79,11 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
     private String PostKeyUid;
     private String address;
+    private String price;
+    private String propertytype;
+    private String titletype;
+    private String image;
+    private String strPostKey;
     private Intent chooser = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -130,6 +141,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
         locationaddress = (TextView)findViewById(R.id.openmaps);
         wishlistBtn = (ImageView)findViewById(R.id.wishlistbtn);
+        imageurl = (TextView)findViewById(R.id.imageurl);
 
         Postuser_id = (TextView)findViewById(R.id.user_id);
         username = (TextView)findViewById(R.id.username);
@@ -157,26 +169,17 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
         //Price = "7Hwf3lr98zHfZvcQuNlU";
         ClickPostRef = FirebaseFirestore.getInstance().collection("Posts").document(PostKey);
-        BookmarkPostRef = FirebaseFirestore.getInstance().collection("Likes");
+        wishlistRefdb = FirebaseFirestore.getInstance().collection("Wishlist").document(PostKey);
+        wishlistRef = FirebaseFirestore.getInstance().collection("Wishlist");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-/*        ClickPostRef = FirebaseFirestore.getInstance().collection("Posts");
-//        ClickPostRef2 = FirebaseDatabase.getInstance().getReference().child("Posts");
-
-        ClickPostRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-            }
-        });*/
-
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(Decrip);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
 
 
@@ -189,13 +192,13 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
             {
                 String description = documentSnapshot.getString("description");
-                String price = documentSnapshot.getString("price");
+                price = documentSnapshot.getString("price");
                 address = documentSnapshot.getString("address");
-                String propertytype = documentSnapshot.getString("propertytype");
+                propertytype = documentSnapshot.getString("propertytype");
                 String bathroom = documentSnapshot.getString("bathroom");
                 String bedrooms = documentSnapshot.getString("bedrooms");
                 String size = documentSnapshot.getString("size");
-                String titletype = documentSnapshot.getString("titletype");
+                titletype = documentSnapshot.getString("titletype");
                 String otherinfo = documentSnapshot.getString("otherinfo");
                 String description2 = documentSnapshot.getString("description2");
                 uid = documentSnapshot.getString("uid");
@@ -233,44 +236,30 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                         username.setText(name);
                         userphone.setText(phone);
                         useremail.setText(email);
+                        imageurl.setText(image);
                         Glide.with(ClickPostActivity.this).load(image).into(profile_image);
 
                     }
                 });
 
-                setBookmarkStatus(PostKey);
-
-            }
-        });
-
-        wishlistBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                BookmarkCheckers = true;
-
-                Toast.makeText(ClickPostActivity.this, "Bookmark button clicked", Toast.LENGTH_SHORT).show();
-
-                BookmarkPostRef.document(PostKey).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                wishlistRefdb.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
                     {
-                        if(documentSnapshot.getString(PostKey).contains(currentUserid))
+                        String uid = documentSnapshot.getString("uid");
+
+                        if(currentUserid == uid )
                         {
-/*                            BookmarkPostRef.collection(PostKey).document(currentUserid).delete();
-                            BookmarkCheckers = false;
-                            Toast.makeText(ClickPostActivity.this, "Bookmark button clicked if", Toast.LENGTH_SHORT).show();*/
+                            wishlistBtn.setImageDrawable(getDrawable(R.drawable.wishlist2));
                         }
-                        else
-                        {
-/*                            BookmarkPostRef.collection(PostKey).document(currentUserid).set(true);
-                            BookmarkCheckers = false;*/
-                        }
+
+
                     }
                 });
 
             }
         });
+
 
         findViewById(R.id.btnSubmitComment).setOnClickListener(this);
         findViewById(R.id.openmaps).setOnClickListener(this);
@@ -278,25 +267,53 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void setBookmarkStatus(final String postKey)
+    private void savetoWishlist()
     {
-/*        BookmarkPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        ClickPostRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
-            {
-                if(documentSnapshot.getString(PostKey).contains(currentUserid))
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+
                 {
-                    wishlistBtn.setImageResource(R.drawable.wishlist2);
-                }
-                else
-                {
-                   wishlistBtn.setImageResource(R.drawable.wishlist);
+
+
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot != null){
+                        HashMap postMap = new HashMap();
+                        postMap.put("uid",currentUserid);
+                        postMap.put("itemId",strPostKey);
+                        postMap.put("address",address);
+                        postMap.put("price",price);
+                        postMap.put("propertytype",propertytype);
+                        postMap.put("titletype",titletype);
+                        postMap.put("postImage",imageurl.getText().toString());
+
+
+                        wishlistBtn.setImageDrawable(getDrawable(R.drawable.wishlist2));
+
+                        wishlistRef.add(postMap).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()){
+
+
+                                    Toast.makeText(ClickPostActivity.this, "Added to wishlist", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(ClickPostActivity.this, "Added to error", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }else{
+
+                    }
+                }else {
+
                 }
             }
-        });*/
+        });
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
@@ -306,7 +323,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
             SendUserToMainActivity();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     private void SendUserToMainActivity()
     {
@@ -366,33 +383,10 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                 startActivity(to_maps);
                 break;
             case R.id.wishlistbtn:
-                BookmarkCheckers = true;
 
-                Toast.makeText(ClickPostActivity.this, "Bookmark button clicked", Toast.LENGTH_SHORT).show();
 
-                BookmarkPostRef.document(currentUserid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
-                    {
-                        //if (task.isSuccessful())
-                        if(documentSnapshot.getString(PostKey).contains(currentUserid))
-                        {
-                            //BookmarkPostRef.document(PostKey).collection(currentUserid).document().delete();
-                            BookmarkPostRef.document(currentUserid).delete();
-                            BookmarkCheckers = false;
+                savetoWishlist();
 
-                        }
-                        else
-                        {
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
-
-                            //BookmarkPostRef.document(currentUserid).set(true);
-                            BookmarkPostRef.document(currentUserid).set(true);
-                            BookmarkCheckers = false;
-                        }
-
-                    }
-                });
                 break;
 
         }

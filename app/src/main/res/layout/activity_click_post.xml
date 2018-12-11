@@ -381,6 +381,14 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/imageurl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/fui_transparent"
+                    android:textSize="12dp" />
+
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

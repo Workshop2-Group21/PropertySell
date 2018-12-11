@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Agent.AllAgentList;
 import com.uyr.yusara.dreamhome.Agent.AllPostActivityAgent;
 import com.uyr.yusara.dreamhome.Menu.Login;
+import com.uyr.yusara.dreamhome.Modal.Wishlist;
 import com.uyr.yusara.dreamhome.News.NewsMainActivity;
+import com.uyr.yusara.dreamhome.WishList.WishlistActivity;
 
 import javax.annotation.Nullable;
 
@@ -247,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }else if (id == R.id.nav_fav) {
 
-            Intent post = new Intent(MainActivity.this, PostActivity.class);
-            startActivity(post);
+            Intent wish = new Intent(MainActivity.this, WishlistActivity.class);
+            startActivity(wish);
 
         } else if (id == R.id.nav_news) {
 
