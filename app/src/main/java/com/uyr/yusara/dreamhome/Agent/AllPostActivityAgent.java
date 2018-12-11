@@ -2,6 +2,7 @@ package com.uyr.yusara.dreamhome.Agent;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,13 +22,21 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.ClickPostActivity;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.Modal.Posts;
+import com.uyr.yusara.dreamhome.PostActivity;
 import com.uyr.yusara.dreamhome.R;
 
 public class AllPostActivityAgent extends AppCompatActivity {
@@ -64,9 +73,6 @@ public class AllPostActivityAgent extends AppCompatActivity {
         UsersRef = FirebaseFirestore.getInstance().collection("Users").document(currentUserid);
         Postsref = FirebaseFirestore.getInstance().collection("Posts");
         //Postsref = FirebaseFirestore.getInstance().collection("Posts").document(PostKey).collection("comment");
-
-
-
 
         mToolbar = (Toolbar) findViewById(R.id.find_toolbar);
         setSupportActionBar(mToolbar);
@@ -109,14 +115,14 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
         FirestoreRecyclerAdapter<Posts,AllPostActivityAgent.PostsViewHolder > adapter = new FirestoreRecyclerAdapter<Posts, AllPostActivityAgent.PostsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull AllPostActivityAgent.PostsViewHolder holder, final int position, @NonNull Posts model)
+            protected void onBindViewHolder(@NonNull final AllPostActivityAgent.PostsViewHolder holder, final int position, @NonNull Posts model)
             {
-
 
 
                 holder.productname.setText(model.getDescription());
                 holder.productprice.setText("RM " + model.getPrice());
                 holder.productdate.setText(model.getDate());
+                holder.productstatus.setText(model.getStatus());
                 Glide.with(AllPostActivityAgent.this).load(model.getPostImage()).into(holder.productimage);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +140,7 @@ public class AllPostActivityAgent extends AppCompatActivity {
                         String PropertyType = getSnapshots().get(position).getPropertytype();
 
 
-                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivityAgent.class);
+                        Intent click_post = new Intent(AllPostActivityAgent.this,ClickPostActivity.class);
                         click_post.putExtra("PostKey", PostKey);
                         click_post.putExtra("Description", Decrip);
                    /*     click_post.putExtra("Price", Price);
@@ -223,7 +229,7 @@ public class AllPostActivityAgent extends AppCompatActivity {
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder
     {
-        TextView productname, productprice, productdate;
+        TextView productname, productprice, productdate, productstatus;
         ImageView productimage;
         LinearLayout layout_action1,layout_action2;
 
@@ -235,8 +241,11 @@ public class AllPostActivityAgent extends AppCompatActivity {
             productprice = itemView.findViewById(R.id.post_product_price);
             productdate = itemView.findViewById(R.id.post_product_date);
             productimage = itemView.findViewById(R.id.post_product_image);
+            productstatus = itemView.findViewById(R.id.post_product_status);
             layout_action1 = itemView.findViewById(R.id.layout_action1);
             layout_action2 = itemView.findViewById(R.id.layout_action2);
         }
+
+
     }
 }

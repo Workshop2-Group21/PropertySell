@@ -1,5 +1,6 @@
 package com.uyr.yusara.dreamhome.Customer;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -25,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.uyr.yusara.dreamhome.Agent.AllAgentList;
 import com.uyr.yusara.dreamhome.AllPostActivity;
+import com.uyr.yusara.dreamhome.AllPostActivity2;
 import com.uyr.yusara.dreamhome.FindHouseActivity;
 import com.uyr.yusara.dreamhome.LoadCalculator;
 import com.uyr.yusara.dreamhome.Menu.Login;
@@ -40,7 +45,7 @@ import javax.annotation.Nullable;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivityCustomer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView userEmail;
     FirebaseUser firebaseUser;
@@ -53,6 +58,9 @@ public class MainActivityCustomer extends AppCompatActivity
     private CircleImageView NavProfileImage;
 
     ViewFlipper flipper2;
+
+    private ImageButton img1, img2, img3, img4, img5, img6;
+    private TextView Bungalow, Single, Triple, halfstorey, semi,others;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +86,27 @@ public class MainActivityCustomer extends AppCompatActivity
         //View navView = navigationView.inflateHeaderView(R.layout.nav_header_main);
         View navView = navigationView.getHeaderView(0);
         NavProfileImage = (CircleImageView)navView.findViewById(R.id.nav_image);
+
+        img1 = (ImageButton) findViewById(R.id.img1);
+        img2 = (ImageButton) findViewById(R.id.img2);
+        img3 = (ImageButton) findViewById(R.id.img3);
+        img4 = (ImageButton) findViewById(R.id.img4);
+        img5 = (ImageButton) findViewById(R.id.img5);
+        img6 = (ImageButton) findViewById(R.id.img6);
+
+        Bungalow = (TextView) findViewById(R.id.bungtext);
+        Single = (TextView) findViewById(R.id.singletext);
+        Triple = (TextView) findViewById(R.id.tripletext);
+        halfstorey = (TextView) findViewById(R.id.halfstoreytext);
+        semi = (TextView)findViewById(R.id.semitexr);
+        others = (TextView)findViewById(R.id.otherstext);
+
+        img1.setOnClickListener(this);
+        img2.setOnClickListener(this);
+        img3.setOnClickListener(this);
+        img4.setOnClickListener(this);
+        img5.setOnClickListener(this);
+        img6.setOnClickListener(this);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -209,9 +238,7 @@ public class MainActivityCustomer extends AppCompatActivity
 
         } else if (id == R.id.nav_about) {
 
-            Intent googlemap = new Intent(MainActivityCustomer.this, MapsActivity.class);
-            startActivity(googlemap);
-
+            MyCustomAlertDialog();
 
         } else if (id == R.id.nav_logout) {
 
@@ -224,5 +251,64 @@ public class MainActivityCustomer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void MyCustomAlertDialog()
+    {
+        final Dialog MyDialog = new Dialog(MainActivityCustomer.this);
+        MyDialog.requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        MyDialog.setContentView(R.layout.about_dialog);
+        MyDialog.setTitle("My Custom Dialog");
+
+        /*hello = (Button)MyDialog.findViewById(R.id.hello);*/
+        Button close = (Button)MyDialog.findViewById(R.id.closebtn);
+
+        close.setEnabled(true);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDialog.cancel();
+            }
+        });
+
+        MyDialog.show();
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId()) {
+            case R.id.img1:
+                Intent allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", Bungalow.getText().toString());
+                startActivity(allpost2);
+                break;
+            case R.id.img2:
+                allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", Single.getText().toString());
+                startActivity(allpost2);
+                break;
+            case R.id.img3:
+                allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", Triple.getText().toString());
+                startActivity(allpost2);
+                break;
+            case R.id.img4:
+                allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", halfstorey.getText().toString());
+                startActivity(allpost2);
+                break;
+            case R.id.img5:
+                allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", semi.getText().toString());
+                startActivity(allpost2);
+                break;
+            case R.id.img6:
+                allpost2 = new Intent(MainActivityCustomer.this, AllPostActivity2.class);
+                allpost2.putExtra("PostBungalow", others.getText().toString());
+                startActivity(allpost2);
+                break;
+        }
     }
 }

@@ -197,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements
                 transferData[1] = url;
 
                 getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, "Searching for nearby mosque", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Searching for nearby hospital", Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "Showing Nearby mosque", Toast.LENGTH_LONG).show();
                 break;
 

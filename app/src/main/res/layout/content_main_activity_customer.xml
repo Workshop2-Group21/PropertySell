@@ -75,7 +75,7 @@
                             app:srcCompat="@drawable/h1" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/bungtext"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -102,7 +102,7 @@
                             app:srcCompat="@drawable/h2" />
 
                         <TextView
-                            android:id="@+id/shopping"
+                            android:id="@+id/singletext"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -129,7 +129,7 @@
                             app:srcCompat="@drawable/h3" />
 
                         <TextView
-                            android:id="@+id/direction"
+                            android:id="@+id/tripletext"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="1"
@@ -185,7 +185,7 @@
                             app:srcCompat="@drawable/h6" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/halfstoreytext"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"
@@ -198,7 +198,7 @@
                             android:textAlignment="center" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/semitexr"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"
@@ -211,7 +211,7 @@
                             android:textAlignment="center" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/otherstext"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_row="3"

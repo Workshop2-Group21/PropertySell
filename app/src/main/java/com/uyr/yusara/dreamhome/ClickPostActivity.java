@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,6 +34,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.util.Util;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.Admin.AllPostPending;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 
 import javax.annotation.Nullable;
 
@@ -177,7 +181,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
 
         //Postdescription.setText("Title : " + Decrip);
-        Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
 
 
         ClickPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -215,7 +219,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                 PostKeyUid = Postuser_id.getText().toString();
                 Postuser_id.setText(PostKeyUid);
                 ClickAgentRef = FirebaseFirestore.getInstance().collection("Users").document(PostKeyUid);
-                Toast.makeText(ClickPostActivity.this, "User ID = " + PostKeyUid, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ClickPostActivity.this, "User ID = " + PostKeyUid, Toast.LENGTH_SHORT).show();
 
                 ClickAgentRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
@@ -233,8 +237,6 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
                     }
                 });
-
-
 
                 setBookmarkStatus(PostKey);
 
@@ -266,29 +268,6 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                         }
                     }
                 });
-
-
-                /*addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
-                    {
-
-                        *//*if(BookmarkCheckers.equals(true))
-                        {*//*
-                            if(documentSnapshot.getString(PostKey).contains(currentUserid))
-                            {
-*//*                                BookmarkPostRef.collection(PostKey).document(currentUserid).delete();
-                                BookmarkCheckers = false;
-                                Toast.makeText(ClickPostActivity.this, "Bookmark button clicked if", Toast.LENGTH_SHORT).show();*//*
-                            }
-                            else
-                            {
-*//*                                BookmarkPostRef.collection(PostKey).document(currentUserid).set(true);
-                                BookmarkCheckers = false;*//*
-                            }
-                       // }
-                    }
-                });*/
 
             }
         });
@@ -331,10 +310,43 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
     private void SendUserToMainActivity()
     {
-        Intent mainIntent = new Intent(ClickPostActivity.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+                        Intent intent = new Intent(ClickPostActivity.this, AllPostActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Customer")) {
+                        Intent intent = new Intent(ClickPostActivity.this, AllPostActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(ClickPostActivity.this, AllPostPending.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(ClickPostActivity.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
 
@@ -368,7 +380,6 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                             //BookmarkPostRef.document(PostKey).collection(currentUserid).document().delete();
                             BookmarkPostRef.document(currentUserid).delete();
                             BookmarkCheckers = false;
-                            Toast.makeText(ClickPostActivity.this, "Bookmark button clicked if", Toast.LENGTH_SHORT).show();
 
                         }
                         else
@@ -378,7 +389,6 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                             //BookmarkPostRef.document(currentUserid).set(true);
                             BookmarkPostRef.document(currentUserid).set(true);
                             BookmarkCheckers = false;
-                            Toast.makeText(ClickPostActivity.this, "Bookmark button clicked else", Toast.LENGTH_SHORT).show();
                         }
 
                     }

@@ -1,5 +1,6 @@
 package com.uyr.yusara.dreamhome.Admin;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -158,13 +161,17 @@ public class AdminMainMenu extends AppCompatActivity
             startActivity(homeIntent);
             finish();
 
-        } else if (id == R.id.nav_find) {
+        }
+        /*else if (id == R.id.nav_find) {
 
 
 
-        } else if (id == R.id.nav_share) {
+        }*/
+        else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {
+            MyCustomAlertDialog();
+
 
         } else if (id == R.id.nav_logout) {
 
@@ -177,6 +184,28 @@ public class AdminMainMenu extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void MyCustomAlertDialog()
+    {
+        final Dialog MyDialog = new Dialog(AdminMainMenu.this);
+        MyDialog.requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        MyDialog.setContentView(R.layout.about_dialog);
+        MyDialog.setTitle("");
+
+        /*hello = (Button)MyDialog.findViewById(R.id.hello);*/
+        Button close = (Button)MyDialog.findViewById(R.id.closebtn);
+
+        close.setEnabled(true);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDialog.cancel();
+            }
+        });
+
+        MyDialog.show();
     }
 
     @Override

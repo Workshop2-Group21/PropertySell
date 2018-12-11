@@ -67,4 +67,5 @@ dependencies {
     //implementation 'com.google.android.gms:play-services-analytics:16.0.3'
     /*   compile 'com.theartofdev.edmodo:android-image-cropper:2.6.+'*/
     implementation files('libs/mpandroidchartlibrary-2-2-4.jar')
+    //implementation 'com.google.firebase:firebase-messaging:17.0.0:15.0.0'
 }

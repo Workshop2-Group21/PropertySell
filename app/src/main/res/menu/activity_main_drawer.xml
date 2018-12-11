@@ -27,7 +27,7 @@
         <item
             android:id="@+id/nav_mysellitem"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Items" />
+            android:title="My Ads" />
         <item
             android:id="@+id/nav_fav"
             android:icon="@drawable/wishlist"

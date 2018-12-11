@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -32,6 +33,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
 
 import java.util.HashMap;
 
@@ -203,10 +206,43 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private void SendUserToMainActivity()
     {
-        Intent mainIntent = new Intent(Profile.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
-        finish();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
+
+        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String role;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    role = doc.get("role").toString();
+
+                    if(role.equals("Agent")){
+                        Intent intent = new Intent(Profile.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Customer")) {
+                        Intent intent = new Intent(Profile.this, MainActivityCustomer.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if (role.equals("Admin")) {
+                        Intent intent = new Intent(Profile.this, AdminMainMenu.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(Profile.this, "Unable to find roles", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     public void toGallery()

@@ -30,6 +30,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.uyr.yusara.dreamhome.Admin.AdminMainMenu;
 import com.uyr.yusara.dreamhome.AllPostActivity2;
+import com.uyr.yusara.dreamhome.Customer.MainActivityCustomer;
+import com.uyr.yusara.dreamhome.FindHouseActivity;
+import com.uyr.yusara.dreamhome.MainActivity;
 import com.uyr.yusara.dreamhome.R;
 
 import javax.annotation.Nullable;
@@ -100,7 +103,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "User ID = " + PostKey, Toast.LENGTH_SHORT).show();
 
 
         ClickPostRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -195,7 +198,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
                     {
                         countPosts = document.size();
                         //unitsale.setText(" Unit On Sales: " + Integer.toString(countPosts));
-                        Toast.makeText(AgentProfileDetailActivity.this, "Size is " + countPosts, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AgentProfileDetailActivity.this, "Size is " + countPosts, Toast.LENGTH_SHORT).show();
 
                     }
                     else
@@ -214,6 +217,13 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
             }
         });*/
+    }
+
+    private void SendUserToMainActivity()
+    {
+       Intent intent = new Intent(AgentProfileDetailActivity.this, AllAgentList.class);
+       startActivity(intent);
+       finish();
     }
 
 
@@ -235,7 +245,7 @@ public class AgentProfileDetailActivity extends AppCompatActivity implements Vie
 
         if(id == android.R.id.home)
         {
-            //SendUserToMainActivity();
+            SendUserToMainActivity();
         }
         return super.onOptionsItemSelected(item);
     }
