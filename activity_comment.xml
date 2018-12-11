@@ -7,6 +7,7 @@
     android:layout_margin="5dp"
     android:background="@color/browser_actions_bg_grey"
     tools:context=".CommentActivity">
+
     <TextView
         android:id="@+id/text_comment"
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView_comment"
         android:layout_width="match_parent"
@@ -26,6 +28,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp" />
+
     <EditText
         android:id="@+id/comment_input"
         android:layout_width="367dp"
@@ -42,6 +45,7 @@
         android:singleLine="false"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:visibility="visible" />
+
     <ImageButton
         android:id="@+id/btnPostComment"
         android:layout_width="48dp"
@@ -50,4 +54,6 @@
         android:layout_alignParentEnd="true"
         android:padding="15dp"
         android:src="@drawable/post_comment" />
+
+
 </RelativeLayout>
