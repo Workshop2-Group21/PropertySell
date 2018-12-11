@@ -30,10 +30,11 @@ public class WishlistAdapter extends FirestoreRecyclerAdapter<Wishlist, Wishlist
     @Override
     protected void onBindViewHolder(@NonNull WishlistHolder holder, int position, @NonNull Wishlist model) {
 
-        holder.textView_address.setText(model.getAddress());
-        holder.textView_price.setText(model.getPrice());
-        holder.textView_titletype.setText(model.getPropertytype());
-        Picasso.get().load(model.getPostImage()).into(holder.productimage);
+        holder.textView_address.setText("Address : " + model.getAddress());
+        holder.textView_price.setText("RM " +model.getPrice());
+        holder.textView_titletype.setText("House Type : " + model.getPropertytype());
+        holder.textView_description.setText( model.getDescription());
+        //Picasso.get().load(model.getPostImage()).into(holder.productimage);
 
     }
 
@@ -53,6 +54,7 @@ public class WishlistAdapter extends FirestoreRecyclerAdapter<Wishlist, Wishlist
         TextView textView_address;
         TextView textView_price;
         TextView textView_titletype;
+        TextView textView_description;
         ImageView productimage;
 
         public WishlistHolder(View itemView){
@@ -63,6 +65,7 @@ public class WishlistAdapter extends FirestoreRecyclerAdapter<Wishlist, Wishlist
             textView_price = itemView.findViewById(R.id.wishlist_price);
             textView_titletype = itemView.findViewById(R.id.wishlist_title_type);
             productimage = itemView.findViewById(R.id.post_product_image);
+            textView_description = itemView.findViewById(R.id.wishlist_description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

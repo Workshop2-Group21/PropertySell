@@ -78,6 +78,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
     private Toolbar mToolbar;
 
     private String PostKeyUid;
+    private String description;
     private String address;
     private String price;
     private String propertytype;
@@ -191,7 +192,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
             {
-                String description = documentSnapshot.getString("description");
+                description = documentSnapshot.getString("description");
                 price = documentSnapshot.getString("price");
                 address = documentSnapshot.getString("address");
                 propertytype = documentSnapshot.getString("propertytype");
@@ -242,20 +243,13 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                     }
                 });
 
-                wishlistRefdb.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+/*                wishlistRefdb.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
+                    public void onEvent(@Nullable final DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
                     {
-                        String uid = documentSnapshot.getString("uid");
-
-                        if(currentUserid == uid )
-                        {
-                            wishlistBtn.setImageDrawable(getDrawable(R.drawable.wishlist2));
-                        }
-
-
+                        wishlistBtn.setImageDrawable(getDrawable(R.drawable.wishlist2));
                     }
-                });
+                });*/
 
             }
         });
@@ -280,6 +274,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot != null){
                         HashMap postMap = new HashMap();
+                        postMap.put("description",description);
                         postMap.put("uid",currentUserid);
                         postMap.put("itemId",strPostKey);
                         postMap.put("address",address);
@@ -327,7 +322,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
 
     private void SendUserToMainActivity()
     {
-        FirebaseAuth mAuth;
+            FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
@@ -335,7 +330,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         com.google.android.gms.tasks.Task<DocumentSnapshot> xx = database.collection("Users").document(uid).get();
 
-        xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            xx.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 String role;
@@ -364,7 +359,7 @@ public class ClickPostActivity extends AppCompatActivity implements View.OnClick
                 }
             }
         });
-    }
+}
 
 
     @Override
